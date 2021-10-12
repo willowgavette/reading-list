@@ -1,0 +1,7 @@
+reading list app basic structure:
+
+-class Book
+-class Essay
+-class OnlineArticle
+
+GUI somehow - run in web browser?
