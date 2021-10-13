@@ -3,7 +3,7 @@ from datetime import date
 class Book:
     """Model for a book."""
     
-    def __init__(self, title, author, year, isbn, finished_book=False):
+    def __init__(self, title, author, year, isbn):
         """
         Initialize book name, author name, the year the book was published, and the ISBN.
         """
@@ -12,12 +12,7 @@ class Book:
         self.year = year
         self.isbn = isbn
         self.when_entered = date.today()
-
-    def __repr__(self):
-        return "Book()"
-    
-    def __str__(self):
-        return "member of Book"
+        self.finished_book = False
         
     def finished(self):
         """Record that we have finished reading the book."""

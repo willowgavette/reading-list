@@ -1,51 +1,40 @@
-from rl_Book import Book
+from rl_functions import *
 
-def enter_book():
+import csv
 
-    active = True
-    while active:
-        print("\nPlease enter some information on the book you'd like to add.")
-
-        title = input("Title: ")
-        author = input("Author: ")
-        year = input("Publication year: ")
-        isbn = input("ISBN: ")
-
-        print(f"The information you entered is as follows:")
-        print(f"\tTitle: {title}")
-        print(f"\tAuthor: {author}")
-        print(f"\tPublication year: {year}")
-        print(f"\tISBN: {isbn}")
-        cont = input("Is this correct? (y/n): ")
-        if cont.lower() != 'n':
-            active = False
-            new_book = Book(title, author, year, isbn)
-            return new_book  
-
-def print_options():
-    print("Welcome to your reading list! You can:")
-    print("\n1. Enter a new book")
-    print("\n2. Update information on a book already in the list")
-    print("\n3. Check your complete reading list")
-    print("\n4. Save and quit")
-
+# Create a list of book objects to store the reading list.
 list_of_books = []
 
 flag = True
-while flag:
 
+# Allow user to choose what action they would like to take.
+while flag:
     print_options()
     option = input("Please enter the number of the option you'd like: ")
-    option = int(option)
-    if option == 1:
+    if option == '1':
         new_book = enter_book()
         list_of_books.append(new_book)
-    elif option == 2:
+    elif option == '2':
         break
-    elif option == 3:
-        break
-    elif option == 4:
+    elif option == '3':
+        print_books(list_of_books)
+    elif option == '4':
+        filename = 'C:\\Users\\Admin\\Documents\\GitHub\\reading-list\\reading_list.csv'
+        print("Saving your list...")
+        with open(filename, 'a') as r_l:
+            for book in list_of_books:
+                r_l.write(f"\n{book.title}")
+                r_l.write(f"\n{book.author}")
+                r_l.write(f"\n{book.year}")
+                r_l.write(f"\n{book.isbn}")
+                when_entered = str(book.when_entered)
+                finished_book = str(book.finished_book)
+                r_l.write(f"\n{when_entered}")
+                r_l.write(f"\n{finished_book}")
+            print("List successfully saved!")
+        print("Thank you for using our reading list app!")
+        flag = False
         break
     else:
-        print("Invalid input detected.")
-        print_options()
+        print("***Invalid input detected! Please try again.***")
+    
