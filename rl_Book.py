@@ -1,5 +1,7 @@
 from datetime import date
 
+from json import JSONEncoder
+
 class Book:
     """Model for a book."""
     
@@ -7,17 +9,21 @@ class Book:
         """
         Initialize book name, author name, the year the book was published, and the ISBN.
         """
-        self.title = title
-        self.author = author
-        self.year = year
-        self.isbn = isbn
-        self.when_entered = date.today()
-        self.finished_book = False
+        
+        self.book_info = {}
+        
+        self.book_info['title'] = title
+        self.book_info['author'] = author
+        self.book_info['year'] = year
+        self.book_info['isbn'] = isbn
+        self.book_info['date'] = date.today()
+        self.book_info['finished'] = False
         
     def finished(self):
         """Record that we have finished reading the book."""
-        self.finished_book = True
+        self.finished = True
 
-    def when_entered(self):
-        """Tell user when this book was entered into the reading list."""
-        print(f"This book was entered into the list on {self.when_entered}.")
+    def to_json(self):
+        """Method to make the dictionaries inside Book() JSON serializable."""
+        return JSONEncoder()
+    

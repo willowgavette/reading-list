@@ -26,10 +26,14 @@ def enter_book():
         print(f"\tPublication year: {year}")
         print(f"\tISBN: {isbn}")
         cont = input("Is this correct? (y/n): ")
-        if cont.lower() != 'n':
+        if cont.lower() == 'y':
             active = False
             new_book = Book(title, author, year, isbn)
             return new_book  
+        elif cont.lower() == 'n':
+            continue
+        else:
+            print("Invalid input detected! Please try again.")
 
 def print_options():
     
@@ -45,13 +49,14 @@ def print_books(list):
     book_number = 1
     for book in list:
         print(f"Book #{book_number}:")
-        print(f"\tTitle: {book.title}")
-        print(f"\tAuthor: {book.author}")
-        print(f"\tPublication year: {book.year}")
-        print(f"\tISBN: {book.isbn}\n")
-        print(f"This book was entered into the app on {book.when_entered}.")
-        if book.finished_book == True:
+        print(f"\t-Title: {book.book_info['title']}")
+        print(f"\t-Author: {book.book_info['author']}")
+        print(f"\t-Publication year: {book.book_info['year']}")
+        print(f"\t-ISBN: {book.book_info['isbn']}\n")
+        print(f"This book was entered into the app on {book.book_info['date']}.")
+        if book.book_info['finished'] == True:
             print("You have finished reading this book! Good job :)")
         else:
             print("You have not finished reading this book yet.")
         book_number += 1
+        
