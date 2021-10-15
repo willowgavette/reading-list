@@ -60,3 +60,9 @@ def print_books(list):
             print("You have not finished reading this book yet.")
         book_number += 1
         
+def load_list():
+    """Load reading list into memory from JSON file."""
+    filename = 'C:\\Users\\Admin\\Documents\\GitHub\\reading-list\\reading_list.json'
+    with open(filename, 'r'):
+        temp_book = {}
+        #json.load(filename)
