@@ -1,9 +1,11 @@
 from rl_functions import *
 from rl_Book import *
 
+filename = 'C:\\Users\\Admin\\Documents\\GitHub\\reading-list\\reading_list.json'
+
 # Create a list of book objects to store the reading list.
 
-list_of_books = []
+list_of_books = load_list()
 
 flag = True
 
@@ -23,6 +25,7 @@ while flag:
         with open(filename, 'w') as reading_list:
             for book in list_of_books:
                 json.dump(book.book_info, reading_list)
+                reading_list.write('\n')
             print("List successfully saved!")
         print("Thank you for using our reading list app!")
         flag = False
