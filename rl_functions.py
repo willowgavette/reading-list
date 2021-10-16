@@ -41,6 +41,7 @@ def print_options():
     
 def print_books(list_of_books):
     """Print the saved list of books."""
+    
     book_number = 1
     for book in list_of_books:
         print(f"Book #{book_number}:")
@@ -65,4 +66,8 @@ def load_list():
             loaded_book = Book(temp_book['title'], temp_book['author'], temp_book['year'], temp_book['isbn'], temp_book['day'])
             temp_list.append(loaded_book)
         return temp_list
+    
+def edit_list(list_of_books):
+    print_books()
+    list_position = input("Please enter the number of the book you would like to edit: ")
     

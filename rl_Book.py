@@ -4,12 +4,8 @@ class Book:
     """Model for a book."""
     
     def __init__(self, title, author, year, isbn, day=''):
-        """
-        Initialize book name, author name, the year the book was published, and the ISBN.
-        """     
-        
-        self.book_info = {}
-        
+        """Initialize information about a book."""     
+        self.book_info = {}   
         self.book_info['title'] = title
         self.book_info['author'] = author
         self.book_info['year'] = year
