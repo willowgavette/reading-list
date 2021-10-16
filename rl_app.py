@@ -17,7 +17,7 @@ while flag:
         new_book = enter_book()
         list_of_books.append(new_book)
     elif option == '2':
-        break
+        edit_list(list_of_books)
     elif option == '3':
         print_books(list_of_books)
     elif option == '4':

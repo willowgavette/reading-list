@@ -68,6 +68,41 @@ def load_list():
         return temp_list
     
 def edit_list(list_of_books):
-    print_books()
-    list_position = input("Please enter the number of the book you would like to edit: ")
-    
+    """Edit one of the books in the list."""
+    print_books(list_of_books)
+    book_to_edit = int(input("Please enter the number of the book you would like to edit: "))
+    current_position = 1
+    for book in list_of_books:
+        if current_position == book_to_edit:
+            print("Please name the item you would like to edit (ex: title, author, etc.")
+            edit = input("If you have finished the book, please type 'finished' and press enter: ")
+            edit = edit.lower().strip()
+            if edit == 'title':
+                change = input("Please enter the updated title: ")
+                book.book_info['title'] = change
+                print("Title successfully updated.")
+                break
+            elif edit == 'author':
+                change = input("Please enter the updated author: ")
+                book.book_info['author'] = change
+                print("Author successfully updated.")
+                break
+            elif edit == 'year':
+                change = input("Please enter the updated year: ")
+                book.book_info['year'] = change
+                print("Year successfully updated.")
+                break
+            elif edit == 'isbn':
+                change = input("Please enter the updated ISBN: ")
+                book.book_info['isbn'] = change
+                print("ISBN successfully updated.")
+                break
+            elif edit == 'finished':
+                book.finished()
+                print("Congrats on finishing the book!")
+                break
+            else:
+                print("Invalid input detected! Please try again.")
+                edit_list(list_of_books)
+        else:
+            current_position += 1
