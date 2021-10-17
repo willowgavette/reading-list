@@ -15,7 +15,8 @@ class Book:
             self.book_info['day'] = day
         else:
             self.book_info['day'] = str(date.today())
-        
+        self.book_info['review'] = ''
+        self.book_info['score'] = 0
         
     def finished(self):
         """Record that we have finished reading the book."""
