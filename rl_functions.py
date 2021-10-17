@@ -52,7 +52,7 @@ def print_books(list_of_books):
     book_number = 0
     for book in list_of_books:
         book_number += 1
-        print(f"Book #{book_number}:")
+        print(f"\nBook #{book_number}:")
         print(f"\t-Title: {book.info['title']}")
         print(f"\t-Author: {book.info['author']}")
         print(f"\t-Publication year: {book.info['year']}")
@@ -126,3 +126,26 @@ def save_list(list_of_books):
             reading_list.write('\n')
         print("List successfully saved!")
     print("Thank you for using our reading list app!")
+
+def sort_list(list_of_books):
+    """Sort the list of books according to parameters given by the user."""
+    print("You may sort your reading list by:")
+    print("\t1. Title")
+    print("\t2. Author")
+    print("\t3. Year of publication")
+    print("\t4. Time of entry")
+    print("\t5. Score")
+    option = input("Please enter the number of the option you'd like: ")
+    active = True
+    while active:
+        if option.strip() == '1':
+            temp_list = []
+            for book in list_of_books:
+                temp_title = book.info['title']
+                temp_list.append(temp_title)
+            temp_list.sort()
+            print("Here is your reading list sorted by title:")
+            for item in temp_list:
+                print(f"\t-{item}")
+                active = False        
+    

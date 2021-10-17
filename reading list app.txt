@@ -3,10 +3,10 @@ reading list app
 basic functionality:
 [DONE] able to enter a book that you would like to read (title, author, year published, ISBN)
 [DONE] able to keep track of when book was entered (date and time)
-- level of interest you have in the book (high/med/low)
-- sort book list by section (date added, interest level, author, etc)
 [DONE] confirm when finished
 [DONE] give rating/5
+- sort book list by section (date added, interest level, author, etc)
+- delete from list while retaining review and score - maybe make a "current" list and a "finished" list?)
 
 additional functionality:
 - find online links about book (wikipedia page, amazon purchase location, etc)

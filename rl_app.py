@@ -43,8 +43,8 @@ while flag:
         save_list(list_of_books)
         flag = False
         break
-    #elif option.strip().lower() == '6':
-        #sort_list()
+    elif option.strip().lower() == '6':
+        sort_list(list_of_books)
     else:
         print("Invalid input detected! Please try again.")
     
