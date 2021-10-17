@@ -1,19 +1,16 @@
 reading list app
 
-overall functionality:
-- able to enter a book that you would like to read (title, author, year published, ISBN, number of pages)
-- able to keep track of when book was entered (date and time)
+basic functionality:
+[DONE] able to enter a book that you would like to read (title, author, year published, ISBN)
+[DONE] able to keep track of when book was entered (date and time)
 - level of interest you have in the book (high/med/low)
 - sort book list by section (date added, interest level, author, etc)
-- confirm when finished
-- give rating/5
+[DONE] confirm when finished
+[DONE] give rating/5
 
 additional functionality:
 - find online links about book (wikipedia page, amazon purchase location, etc)
 - able to fill in information about book based on given info (put in name of book and author, app autofills year published and ISBN based on internet search)
 - display cover of book based on google image search
 - link to audiobook
-
-essay integration:
-- information on essay (author, publication date, name, etc)
-- location of where to read (marxists.org, anarchist library)
+- add essays and online articles
