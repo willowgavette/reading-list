@@ -4,12 +4,12 @@ import json
 def load_list(filename):
     """Load reading list into memory from JSON file."""
     with open(filename, 'r') as book_list:
-        temp_list = []
+        t_list = []
         for json_obj in book_list:
-            temp_book = json.loads(json_obj)
-            loaded_book = Book(temp_book['title'], temp_book['author'], temp_book['year'], temp_book['isbn'], temp_book['day'])
-            temp_list.append(loaded_book)
-        return temp_list
+            book = json.loads(json_obj)
+            loaded_book = Book(book['title'], book['author'], book['year'], book['isbn'], book['finished'], book['date'], book['review'], book['score'])
+            t_list.append(loaded_book)
+        return t_list
     
 def enter_book():
     """Create a new book object and store user-entered info. Return created object."""
@@ -32,7 +32,7 @@ def enter_book():
         cont = input("Is this correct? (y/n): ")
         if cont.lower().strip() == 'y':
             active = False
-            new_book = Book(title.strip().lower(), author.strip().lower(), year.strip().lower(), isbn.strip().lower())
+            new_book = Book(title.strip(), author.strip().title(), year.strip(), isbn.strip())
             return new_book  
         elif cont.strip() == 'n':
             continue
@@ -53,23 +53,32 @@ def print_books(list_of_books):
     for book in list_of_books:
         book_number += 1
         print(f"Book #{book_number}:")
-        print(f"\t-Title: {book.book_info['title']}")
-        print(f"\t-Author: {book.book_info['author']}")
-        print(f"\t-Publication year: {book.book_info['year']}")
-        print(f"\t-ISBN: {book.book_info['isbn']}\n")
-        print(f"This book was entered into the app on {book.book_info['day']}.")
-        if book.book_info['finished'] == True:
-            print("You have finished reading this book! Good job :)")
+        print(f"\t-Title: {book.info['title']}")
+        print(f"\t-Author: {book.info['author']}")
+        print(f"\t-Publication year: {book.info['year']}")
+        print(f"\t-ISBN: {book.info['isbn']}")
+        print(f"\t-Date & time entered: {book.info['date']}")
+        if book.info['finished'] == True:
+            print("\t-Status: Completed")
         else:
-            print("You have not finished reading this book yet.")
+            print("\t-Status: Not completed")
+        if book.info['review']:
+            print("\t-Book review:")
+            print(f"{book.info['review']}")
+        else:
+            continue
+        if book.info['score'] != 0:
+            print(f"\t-Score: {book.info['score']}/5")
+        else:
+            continue
             
 def review_book(book_obj):
     """Enter a review for a book you've finished."""
-    if book_obj.book_info['finished'] == False:
+    if book_obj.info['finished'] == False:
         print("You haven't finished this book yet! Please update the book entry first.")
     else:
-        book_obj.book_info['review'] = input("Please enter your review here:\n")
-        book_obj.book_info['score'] = int(input("Please enter a score (out of five) for this book: "))
+        book_obj.info['review'] = input("Please enter your review here:\n")
+        book_obj.info['score'] = int(input("Please enter a score (out of five) for this book: "))
         print("Review and score saved!")
 
 def edit_entry(book_obj):
@@ -80,22 +89,22 @@ def edit_entry(book_obj):
     while edit:
         if edit == 'title':
             change = input("Please enter the updated title: ")
-            book_obj.book_info['title'] = change.strip().lower()
+            book_obj.info['title'] = change.strip()
             print("Title successfully updated.")
             break
         elif edit == 'author':
             change = input("Please enter the updated author: ")
-            book_obj.book_info['author'] = change.strip().lower()
+            book_obj.info['author'] = change.strip().title()
             print("Author successfully updated.")
             break
         elif edit == 'year':
             change = input("Please enter the updated year: ")
-            book_obj.book_info['year'] = change.strip().lower()
+            book_obj.info['year'] = change.strip()
             print("Year successfully updated.")
             break
         elif edit == 'isbn':
             change = input("Please enter the updated ISBN: ")
-            book_obj.book_info['isbn'] = change.strip().lower()
+            book_obj.info['isbn'] = change.strip()
             print("ISBN successfully updated.")
             break
         elif edit == 'finished':
@@ -113,8 +122,7 @@ def save_list(list_of_books):
     print("Saving your list...")
     with open(filename, 'w') as reading_list:
         for book in list_of_books:
-            json.dump(book.book_info, reading_list)
+            json.dump(book.info, reading_list)
             reading_list.write('\n')
         print("List successfully saved!")
     print("Thank you for using our reading list app!")
-        
