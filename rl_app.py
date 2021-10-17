@@ -1,8 +1,6 @@
 from rl_functions import *
 from rl_Book import *
 
-filename = 'C:\\Users\\Admin\\Documents\\GitHub\\reading-list\\reading_list.json'
-
 # Create a list of book objects to store the reading list.
 
 list_of_books = load_list()
@@ -21,15 +19,13 @@ while flag:
     elif option == '3':
         print_books(list_of_books)
     elif option == '4':
-        print("Saving your list...")
-        with open(filename, 'w') as reading_list:
-            for book in list_of_books:
-                json.dump(book.book_info, reading_list)
-                reading_list.write('\n')
-            print("List successfully saved!")
-        print("Thank you for using our reading list app!")
+        save_list(list_of_books)
         flag = False
         break
+    elif option == '5':
+        review_book()
+    #elif option == '6':
+        #sort_list()
     else:
         print("Invalid input detected! Please try again.")
     

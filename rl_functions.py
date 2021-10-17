@@ -38,6 +38,7 @@ def print_options():
     print("\n2. Update information on a book already in the list")
     print("\n3. Check your complete reading list")
     print("\n4. Save and quit")
+    print("\n5. Post a review of a book")
     
 def print_books(list_of_books):
     """Print the saved list of books."""
@@ -106,3 +107,25 @@ def edit_list(list_of_books):
                 edit_list(list_of_books)
         else:
             current_position += 1
+            
+def review_book(book_obj):
+    """Enter a review for a book you've finished."""
+    if book_obj.book_info['finished'] == False:
+        print("You haven't finished this book yet! Please update the book entry first.")
+    else:
+        review = input("Please enter your review here:\n")
+        score = int(input("Please enter a score (out of five) for this book: "))
+        return review, score
+    
+def save_list(list_of_books):
+    """Save the list of books to a JSON file."""
+    filename = 'C:\\Users\\Admin\\Documents\\GitHub\\reading-list\\reading_list.json'
+
+    print("Saving your list...")
+    with open(filename, 'w') as reading_list:
+        for book in list_of_books:
+            json.dump(book.book_info, reading_list)
+            reading_list.write('\n')
+        print("List successfully saved!")
+    print("Thank you for using our reading list app!")
+        
