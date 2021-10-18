@@ -40,11 +40,11 @@ while flag:
         else:
             edit_entry(list_of_books[0])
     elif option.strip().lower() == '5':
+        sort_list(list_of_books)
+    elif option.strip().lower() == '6':
         save_list(list_of_books)
         flag = False
         break
-    elif option.strip().lower() == '6':
-        sort_list(list_of_books)
     else:
         print("Invalid input detected! Please try again.")
     
