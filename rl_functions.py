@@ -145,13 +145,13 @@ def save_list(list_of_books):
         print("List successfully saved!")
     print("Thank you for using our reading list app!")
 
-def sort_menu(list_of_books):
+def sort_list(list_of_books):
     """Sort the list of books according to parameters given by the user."""
     print("You may sort your reading list by:")
     print("\t1. Title")
     print("\t2. Author")
-    print("\t3. Year of publication(newest to oldest")
-    print("\t4. Score(highest to lowest")
+    print("\t3. Year of publication(newest to oldest)")
+    print("\t4. Score(highest to lowest)")
     option = input("Please enter the number of the option you'd like: ")
     active = True
     while active:
@@ -163,7 +163,10 @@ def sort_menu(list_of_books):
             title_list.sort()
             print("Here is your reading list sorted by title:")
             for item in title_list:
-                print(f"\t-{item}")
+                for book in list_of_books:
+                    if book.info['title'] == item:
+                        print_book(book)
+                        print("\n")
                 active = False 
         if option.strip() == '2':
             author_list = []
@@ -173,17 +176,23 @@ def sort_menu(list_of_books):
             author_list.sort()
             print("Here is your reading list sorted by author:")
             for item in author_list:
-                print(f"\t-{item}")
-                active = False 
+                for book in list_of_books:
+                    if book.info['author'] == item:
+                        print_book(book)
+                        print("\n")
+                active = False
         if option.strip() == '3':
             year_list = []
             for book in list_of_books:
-                temp_year = int(book.info['year'])
+                temp_year = book.info['year']
                 year_list.append(temp_year)
             year_list.sort(reverse=True)
-            print("Here is your reading list sorted by year, from oldest to newest:")
+            print("Here is your reading list sorted by year, from newest to oldest:")
             for item in year_list:
-                print(f"\t-{item}")
+                for book in list_of_books:
+                    if book.info['year'] == item:
+                        print_book(book)
+                        print("\n")
                 active = False
         if option.strip() == '4':
             score_list = []
@@ -194,9 +203,9 @@ def sort_menu(list_of_books):
             score_list.sort(reverse=True)
             print("Here is your reading list sorted by score, from highest to lowest:")
             for item in score_list:
-                print(f"\t-{item}")
+                for book in list_of_books:
+                    if book.info['score'] == item:
+                        print_book(book)
+                        print("\n")
                 active = False 
                 
-def sort_list(option):
-    """Sort and pass back the reading list."""
-    
