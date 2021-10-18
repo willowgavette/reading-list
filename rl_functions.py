@@ -48,7 +48,7 @@ def print_options():
     print("\n5. Sort your reading list")
     print("\n6. Save and quit")
 
-def print_books(list_of_books):
+def print_list(list_of_books):
     """Print the saved list of books."""  
     book_number = 0
     for book in list_of_books:
@@ -72,6 +72,23 @@ def print_books(list_of_books):
             print(f"\t-Score: {book.info['score']}/5")
         else:
             continue
+        
+def print_book(book_obj):
+    """Print a single book and all associated information."""
+    print(f"\t-Title: {book_obj.info['title']}")
+    print(f"\t-Author: {book_obj.info['author']}")
+    print(f"\t-Publication year: {book_obj.info['year']}")
+    print(f"\t-ISBN: {book_obj.info['isbn']}")
+    print(f"\t-Date & time entered: {book_obj.info['date']}")
+    if book_obj.info['finished'] == True:
+        print("\t-Status: Completed")
+    else:
+        print("\t-Status: Not completed")
+    if book_obj.info['review']:
+        print("\t-Book review:")
+        print(f"{book_obj.info['review']}")
+    if book_obj.info['score'] != 0:
+        print(f"\t-Score: {book_obj.info['score']}/5")
             
 def review_book(book_obj):
     """Enter a review for a book you've finished."""
@@ -128,7 +145,7 @@ def save_list(list_of_books):
         print("List successfully saved!")
     print("Thank you for using our reading list app!")
 
-def sort_list(list_of_books):
+def sort_menu(list_of_books):
     """Sort the list of books according to parameters given by the user."""
     print("You may sort your reading list by:")
     print("\t1. Title")
@@ -179,3 +196,7 @@ def sort_list(list_of_books):
             for item in score_list:
                 print(f"\t-{item}")
                 active = False 
+                
+def sort_list(option):
+    """Sort and pass back the reading list."""
+    

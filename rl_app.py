@@ -24,23 +24,24 @@ while flag:
         print_books(list_of_books)
     elif option.strip().lower() == '2':
         new_book = enter_book()
+        print_book(new_book)
         list_of_books.append(new_book)
     elif option.strip().lower() == '3':
         if len(list_of_books) > 1:
-            print_books(list_of_books)
+            print_list(list_of_books)
             book_to_review = int(input("Please enter the number of the book you would like to review: "))
             review_book(list_of_books[book_to_review - 1])
         else:
             review_book(list_of_books[0])
     elif option.strip().lower() == '4':
         if len(list_of_books) > 1:
-            print_books(list_of_books)
+            print_list(list_of_books)
             book_to_edit = int(input("Please enter the number of the book you would like to edit: "))
             edit_entry(list_of_books[book_to_edit - 1])
         else:
             edit_entry(list_of_books[0])
     elif option.strip().lower() == '5':
-        sort_list(list_of_books)
+        sort_menu(list_of_books)
     elif option.strip().lower() == '6':
         save_list(list_of_books)
         flag = False
