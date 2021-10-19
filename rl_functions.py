@@ -41,20 +41,20 @@ def enter_book():
         else:
             print("Invalid input detected! Please try again.")
             
-def print_options():  
+def options():  
     """Print the list of options the user can choose from."""
     print("\n1. Check your reading list")
     print("\n2. Enter a new book")
-    print("\n3. Post a review of a book")
-    print("\n4. Update information on a book already in the list")
+    print("\n3. Update a book entry")
+    print("\n4. Review and score a book")
     print("\n5. Sort your reading list")
     print("\n6. Delete an entry from the list")
     print("\n7. Save and quit")
 
-def print_list(list_of_books):
+def print_l(book_list):
     """Print the entire saved list of books."""  
     book_number = 0
-    for book in list_of_books:
+    for book in book_list:
         book_number += 1
         print(f"\nBook #{book_number}:")
         print(f"\t-Title: {book.info['title']}")
@@ -76,7 +76,7 @@ def print_list(list_of_books):
         else:
             continue
         
-def print_book(book_obj):
+def print_b(book_obj):
     """Print a single book and all associated information."""
     print(f"\t-Title: {book_obj.info['title']}")
     print(f"\t-Author: {book_obj.info['author']}")
@@ -93,7 +93,7 @@ def print_book(book_obj):
     if book_obj.info['score'] != 0:
         print(f"\t-Score: {book_obj.info['score']}/5")
             
-def review_book(book_obj):
+def review(book_obj):
     """Enter a review for a book you've finished."""
     if book_obj.info['finished'] == False:
         print("You haven't finished this book yet! Please update the book entry first.")
@@ -102,7 +102,7 @@ def review_book(book_obj):
         book_obj.info['score'] = int(input("Please enter a score (out of five) for this book: "))
         print("Review and score saved!")
 
-def edit_entry(book_obj):
+def edit(book_obj):
     """Edit one of the books in the list."""
     print("Please name the item you would like to edit (ex: title, author, etc.")
     edit = input("If you have finished the book, please type 'finished' and press enter: ")
@@ -134,21 +134,21 @@ def edit_entry(book_obj):
             break
         else:
             print("Invalid input detected! Please try again.")
-            edit_entry(book_obj)
+            edit(book_obj)
     
 
-def save_list(list_of_books):
+def save_list(book_list):
     """Save the list of books to a JSON file."""
     filename = 'C:\\Users\\Admin\\Documents\\GitHub\\reading-list\\reading_list.json'
     print("Saving your list...")
     with open(filename, 'w') as reading_list:
-        for book in list_of_books:
+        for book in book_list:
             json.dump(book.info, reading_list)
             reading_list.write('\n')
         print("List successfully saved!")
     print("Thank you for using our reading list app!")
 
-def sort_list(list_of_books):
+def sort_l(book_list):
     """Sort the list of books according to parameters given by the user."""
     print("You may sort your reading list by:")
     print("\t1. Title")
@@ -160,63 +160,63 @@ def sort_list(list_of_books):
     while active:
         if option.strip() == '1':
             title_list = []
-            for book in list_of_books:
+            for book in book_list:
                 temp_title = book.info['title']
                 title_list.append(temp_title)
             title_list.sort()
             print("Here is your reading list sorted by title:")
             for item in title_list:
-                for book in list_of_books:
+                for book in book_list:
                     if book.info['title'] == item:
-                        print_book(book)
+                        print_b(book)
                         print("\n")
                 active = False 
         if option.strip() == '2':
             author_list = []
-            for book in list_of_books:
+            for book in book_list:
                 temp_author = book.info['author']
                 author_list.append(temp_author)
             author_list.sort()
             print("Here is your reading list sorted by author:")
             for item in author_list:
-                for book in list_of_books:
+                for book in book_list:
                     if book.info['author'] == item:
-                        print_book(book)
+                        print_b(book)
                         print("\n")
                 active = False
         if option.strip() == '3':
             year_list = []
-            for book in list_of_books:
+            for book in book_list:
                 temp_year = book.info['year']
                 year_list.append(temp_year)
             year_list.sort(reverse=True)
             print("Here is your reading list sorted by year, from newest to oldest:")
             for item in year_list:
-                for book in list_of_books:
+                for book in book_list:
                     if book.info['year'] == item:
-                        print_book(book)
+                        print_b(book)
                         print("\n")
                 active = False
         if option.strip() == '4':
             score_list = []
-            for book in list_of_books:
+            for book in book_list:
                 temp_score = book.info['score']
                 if temp_score:
                     score_list.append(temp_score)
             score_list.sort(reverse=True)
             print("Here is your reading list sorted by score, from highest to lowest:")
             for item in score_list:
-                for book in list_of_books:
+                for book in book_list:
                     if book.info['score'] == item:
-                        print_book(book)
+                        print_b(book)
                         print("\n")
                 active = False 
                 
-def delete_entry(list_of_books):
+def delete(book_list):
     """Delete an entry from the reading list."""
-    print_list(list_of_books)
+    print_l(book_list)
     to_del = input("Please enter the number of the entry you would like to delete: ")
     to_del = int(to_del)
-    list_of_books.remove(list_of_books[to_del - 1])
+    book_list.remove(book_list[to_del - 1])
     print("Entry successfully deleted!")
     
