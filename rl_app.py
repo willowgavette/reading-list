@@ -43,6 +43,8 @@ while flag:
     elif option.strip() == '5':
         sort_list(list_of_books)
     elif option.strip() == '6':
+        delete_entry(list_of_books)
+    elif option.strip() == '7':
         save_list(list_of_books)
         flag = False
         break

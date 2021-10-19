@@ -5,8 +5,8 @@ basic functionality:
 [DONE] able to keep track of when book was entered (date and time)
 [DONE] confirm when finished
 [DONE] give rating/5
-- sort book list by section (date added, interest level, author, etc)
-- delete from list while retaining review and score - maybe make a "current" list and a "finished" list?)
+[DONE] sort book list by section (date added, author, etc)
+[DONE] delete entries from list
 
 additional functionality:
 - find online links about book (wikipedia page, amazon purchase location, etc)

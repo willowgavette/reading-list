@@ -1,6 +1,8 @@
 from rl_Book import Book
 import json
 
+# The list of functions we need to actually manipulate data inside our reading list.
+
 def load_list(filename):
     """Load reading list into memory from JSON file."""
     with open(filename, 'r') as book_list:
@@ -46,10 +48,11 @@ def print_options():
     print("\n3. Post a review of a book")
     print("\n4. Update information on a book already in the list")
     print("\n5. Sort your reading list")
-    print("\n6. Save and quit")
+    print("\n6. Delete an entry from the list")
+    print("\n7. Save and quit")
 
 def print_list(list_of_books):
-    """Print the saved list of books."""  
+    """Print the entire saved list of books."""  
     book_number = 0
     for book in list_of_books:
         book_number += 1
@@ -209,3 +212,11 @@ def sort_list(list_of_books):
                         print("\n")
                 active = False 
                 
+def delete_entry(list_of_books):
+    """Delete an entry from the reading list."""
+    print_list(list_of_books)
+    to_del = input("Please enter the number of the entry you would like to delete: ")
+    to_del = int(to_del)
+    list_of_books.remove(list_of_books[to_del - 1])
+    print("Entry successfully deleted!")
+    
