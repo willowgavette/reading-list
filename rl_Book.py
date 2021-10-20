@@ -11,9 +11,9 @@ class Book:
         self.info['year'] = year
         self.info['isbn'] = isbn
         if finished:
-            self.info['finished'] = finished
+            self.info['status'] = finished
         else:
-            self.info['finished'] = False
+            self.info['status'] = False
         if date:
             self.info['date'] = date
         else:
@@ -27,7 +27,7 @@ class Book:
         else:
             self.info['score'] = 0
    
-    def finished(self):
+    def done(self):
         """Record that we have finished reading the book."""
-        self.info['finished'] = True
+        self.info['status'] = True
         

@@ -5,6 +5,7 @@ import os
 # Check storage to see if a list already exists.
 # If one does, load it. If one does not, create one.
 filename = 'C:\\Users\\Admin\\Documents\\GitHub\\reading-list\\reading_list.json'
+
 try:
     book_list = load_list(filename)
 except FileNotFoundError:
@@ -53,7 +54,7 @@ while True:
         if len(book_list) == 0:
             print("\nThere are no entries to sort!")
         # If there is only one book in the list, alert user.
-        if len(book_list) > 1:
+        elif len(book_list) == 1:
             print("\nYou can't sort a list with only one entry!")
         else:
             sort_l(book_list)
@@ -71,7 +72,7 @@ while True:
             print("Thank you for using our reading list app!")
             break
         else:
-            save_list(book_list)
+            save_l(book_list)
             break
     else:
         print("Invalid input detected! Please try again.")
