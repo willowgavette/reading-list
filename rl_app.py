@@ -16,18 +16,17 @@ except FileNotFoundError:
 print("\nWelcome to your reading list! You can:")
 
 while True:
-    options()
-    task = input("Please enter the number of the option you'd like: ")
-    if task.strip() == '1':
+    task = options()
+    if task == '1':
         # If there are no entries to display, alert user.
         if len(book_list) == 0:
             print("\nThere are no entries to show!")
         else:
             print_l(book_list)
-    elif task.strip() == '2':
+    elif task == '2':
         new_book = enter_book()
         book_list.append(new_book)
-    elif task.strip() == '3':
+    elif task == '3':
         # If there are no entries to update, alert user.
         if len(book_list) == 0:
             print("\nThere are no entries to update!")
@@ -38,7 +37,7 @@ while True:
             edit(book_list[edit_num-1])
         else:
             edit(book_list[0])
-    elif task.strip() == '4':
+    elif task == '4':
         # If there are no entries to review & score, alert user.
         if len(book_list) == 0:
             print("\nThere are no entries to review & score!")
@@ -49,7 +48,7 @@ while True:
             review(book_list[review_num-1])
         else:
             review(book_list[0])          
-    elif task.strip() == '5':
+    elif task == '5':
         # If there are no entries to sort, alert user.
         if len(book_list) == 0:
             print("\nThere are no entries to sort!")
@@ -58,13 +57,13 @@ while True:
             print("\nYou can't sort a list with only one entry!")
         else:
             sort_l(book_list)
-    elif task.strip() == '6':
+    elif task == '6':
         # If the list is empty, alert user.
         if len(book_list) == 0:
             print("\nThere are no entries to delete!")
         else:
          delete(book_list)
-    elif task.strip() == '7':
+    elif task == '7':
         # If the user has deleted all entries, erase JSON file where the books are stored.
         if len(book_list) == 0:
             os.remove(filename)

@@ -15,31 +15,29 @@ def load_list(filename):
     
 def enter_book():
     """Create a new book object and store user-entered info. Return created object."""
-    active = True
-    while active:
-        print("\nPlease enter some information on the book you'd like to add.")
+    print("\nPlease enter some information on the book you'd like to add.")
 
-        # Create temporary variables to pass to the Book() class.
-        title = input("Title: ")
-        author = input("Author: ")
-        year = input("Publication year: ")
-        isbn = input("ISBN: ")
+    # Create temporary variables to pass to the Book() class.
+    title = input("Title: ")
+    author = input("Author: ")
+    year = input("Publication year: ")
+    isbn = input("ISBN: ")
 
-        # Check to make sure user entered the information correctly.
-        print("The information you entered is as follows:")
-        print(f"\tTitle: {title}")
-        print(f"\tAuthor: {author}")
-        print(f"\tPublication year: {year}")
-        print(f"\tISBN: {isbn}")
-        cont = input("Is this correct? (y/n): ")
-        if cont.lower().strip() == 'y':
-            active = False
-            new_book = Book(title.strip(), author.strip().title(), year.strip(), isbn.strip())
-            return new_book  
-        elif cont.strip() == 'n':
-            continue
-        else:
-            print("Invalid input detected! Please try again.")
+    # Check to make sure user entered the information correctly.
+    print("The information you entered is as follows:")
+    print(f"\tTitle: {title}")
+    print(f"\tAuthor: {author}")
+    print(f"\tPublication year: {year}")
+    print(f"\tISBN: {isbn}")
+    cont = input("Is this correct? (y/n): ")
+    if cont.lower().strip() == 'y':
+        new_book = Book(title.strip(), author.strip().title(), year.strip(), isbn.strip())
+        return new_book  
+    elif cont.lower().strip() == 'n':
+        enter_book()     
+    else:
+        print("Invalid input detected! Please try again.")
+        enter_book()
             
 def options():  
     """Print the list of options the user can choose from."""
@@ -50,6 +48,8 @@ def options():
     print("\n5. Sort your reading list")
     print("\n6. Delete an entry from the list")
     print("\n7. Save and quit")
+    option = input("Please enter the number of the option you'd like: ")
+    return option.strip()
 
 def print_l(book_list):
     """Print the entire saved list of books."""  
