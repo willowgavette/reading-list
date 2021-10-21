@@ -2,6 +2,10 @@ from rl_Book import Book
 import json
 import shutil
 
+columns, lines = shutil.get_terminal_size()
+columns = int(columns)
+lines = int(lines)
+
 # The list of functions we need to actually manipulate data inside our reading list.
 
 def load_list(filename):
@@ -23,6 +27,7 @@ def enter_book():
     author = input("Author: ")
     year = input("Publication year: ")
     isbn = input("ISBN: ")
+    
 
     # Check to make sure user entered the information correctly.
     print("The information you entered is as follows:")
@@ -33,7 +38,8 @@ def enter_book():
     cont = input("Is this correct? (y/n): ")
     if cont.lower().strip() == 'y':
         new_book = Book(title.strip(), author.strip().title(), year.strip(), isbn.strip())
-        return new_book  
+        return new_book 
+        print(columns * '-')
     elif cont.lower().strip() == 'n':
         enter_book()     
     else:
@@ -50,6 +56,7 @@ def options():
     print("\n6. Delete an entry from the list")
     print("\n7. Save and quit")
     option = input("Please enter the number of the option you'd like: ")
+    print(columns * '-')
     return option.strip()
 
 def print_l(book_list):
@@ -65,17 +72,14 @@ def print_l(book_list):
         print(f"\t-Date & time entered: {book.info['date']}")
         if book.info['status'] == True:
             print("\t-Status: Completed")
+            if book.info['review']:
+                print("\t-Book review:")
+                print(f"{book.info['review']}")
+            if book.info['score'] != 0:
+                print(f"\t-Score: {book.info['score']}/5")
+            print(columns * '-')
         else:
             print("\t-Status: Not completed")
-        if book.info['review']:
-            print("\t-Book review:")
-            print(f"{book.info['review']}")
-        else:
-            continue
-        if book.info['score'] != 0:
-            print(f"\t-Score: {book.info['score']}/5")
-        else:
-            continue
         
 def print_b(book_obj):
     """Print a single book and all associated information."""
@@ -93,17 +97,21 @@ def print_b(book_obj):
             print(f"\t-Score: {book_obj.info['score']}/5")
     else:
         print("\t-Status: Not Finished")
+    print(columns * '-')
             
 def review(book_obj):
     """Enter a review for a book you've finished."""
     if book_obj.info['status'] == False:
         print("You haven't finished this book yet! Please update the book entry first.")
+        print(columns * '-')
     else:
         book_obj.info['review'] = input("Please enter your review here:\n")
+        print(columns * '-')
         score = int(input("Please enter a score (from one to five) for this book: "))
         if score > 0 < 6:
             book_obj.info['score'] = score
             print("Review and score saved!")
+            print(columns * '-')
         else:
             print("Invalid input detected!\nRemember to score the book on a scale from one to five.")
 
@@ -118,25 +126,30 @@ def edit(book_obj):
             change = input("Please enter the updated title: ")
             book_obj.info['title'] = change.strip()
             print("Title successfully updated.")
+            print(columns * '-')
             break
         elif edit == '2':
             change = input("Please enter the updated author: ")
             book_obj.info['author'] = change.strip().title()
             print("Author successfully updated.")
+            print(columns * '-')
             break
         elif edit == '3':
             change = input("Please enter the updated year: ")
             book_obj.info['year'] = change.strip()
             print("Year successfully updated.")
+            print(columns * '-')
             break
         elif edit == '4':
             change = input("Please enter the updated ISBN: ")
             book_obj.info['isbn'] = change.strip()
             print("ISBN successfully updated.")
+            print(columns * '-')
             break
         elif edit == '5':
             book_obj.done()
             print("Congrats on finishing the book!")
+            print(columns * '-')
             break
         else:
             print("Invalid input detected! Please try again.")
@@ -150,6 +163,7 @@ def save_l(book_list, filename='C:\\Users\\Admin\\Documents\\GitHub\\reading-lis
             json.dump(book.info, file_obj)
             file_obj.write('\n')
         print("List successfully saved!")
+        print(columns * '-')
     print("Thank you for using our reading list app!")
 
 def sort_l(book_list):
@@ -173,7 +187,7 @@ def sort_l(book_list):
             for book in book_list:
                 if book.info['title'] == item:
                     print_b(book)
-                    print('-------------------------------------------')
+                    print(columns * '-')
     if option.strip() == '2':
         author_list = []
         for book in book_list:
@@ -185,7 +199,7 @@ def sort_l(book_list):
             for book in book_list:
                 if book.info['author'] == item:
                     print_b(book)
-                    print('-------------------------------------------')
+                    print(columns * '-')
     if option.strip() == '3':
         year_list = []
         for book in book_list:
@@ -197,7 +211,7 @@ def sort_l(book_list):
             for book in book_list:
                 if book.info['year'] == item:
                     print_b(book)
-                    print('-------------------------------------------')
+                    print(columns * '-')
     if option.strip() == '4':
         year_list = []
         for book in book_list:
@@ -209,7 +223,7 @@ def sort_l(book_list):
             for book in book_list:
                 if book.info['year'] == item:
                     print_b(book)
-                    print('-------------------------------------------')
+                    print(columns * '-')
     if option.strip() == '5':
         score_list = []
         for book in book_list:
@@ -222,7 +236,7 @@ def sort_l(book_list):
             for book in book_list:
                 if book.info['score'] == item:
                     print_b(book)
-                    print('-------------------------------------------')
+                    print(columns * '-')
     if option.strip() == '6':
         score_list = []
         for book in book_list:
@@ -235,7 +249,7 @@ def sort_l(book_list):
             for book in book_list:
                 if book.info['score'] == item:
                     print_b(book)
-                    print('-------------------------------------------')
+                    print(columns * '-')
                 
 def delete(book_list):
     """Delete an entry from the reading list."""
@@ -244,4 +258,5 @@ def delete(book_list):
     to_del = int(to_del)
     book_list.remove(book_list[to_del - 1])
     print("Entry successfully deleted!")
+    print(columns * '-')
     
