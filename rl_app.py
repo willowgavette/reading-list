@@ -7,12 +7,9 @@ import os
 filename = 'C:\\Users\\Admin\\Documents\\GitHub\\reading-list\\reading_list.json'
 
 try:
-    book_list = load_list(filename)
+    book_list = load_l(filename)
 except FileNotFoundError:
-    book_list = []
-    print("It looks like this is your very first time using the app! As such, let's get your first book entered.")
-    new_book = enter_book()
-    book_list.append(new_book)
+    create_l(filename)
     
 print("\nWelcome to your reading list! You can:")
 

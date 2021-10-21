@@ -8,7 +8,7 @@ lines = int(lines)
 
 # The list of functions we need to actually manipulate data inside our reading list.
 
-def load_list(filename):
+def load_l(filename):
     """Load reading list into memory from JSON file."""
     with open(filename, 'r') as book_list:
         t_list = []
@@ -18,13 +18,27 @@ def load_list(filename):
             t_list.append(loaded_book)
         return t_list
     
+def create_l(filename):
+    """Create a new list and enter the first book into that list."""
+    print("Welcome to the reading list app! Let's get your very first book entered.")
+    t_list = []
+    new_book = enter_book()
+    t_list.append(new_book)
+    return  t_list
+    
 def enter_book():
     """Create a new book object and store user-entered info. Return created object."""
     print("\nPlease enter some information on the book you'd like to add.")
 
     # Create temporary variables to pass to the Book() class.
     title = input("Title: ")
+    if title == '':
+        print("You must input a title!")
+        enter_book()
     author = input("Author: ")
+    if author == '':
+        print("You must input an author!")
+        enter_book()
     year = input("Publication year: ")
     isbn = input("ISBN: ")
     
