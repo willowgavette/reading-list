@@ -3,13 +3,19 @@ from datetime import datetime
 class Book:
     """Model for a book."""
     
-    def __init__(self, title, author, year, isbn, done='', date='', review='', score=''):
+    def __init__(self, title, author, year='', isbn='', done=False, date='', review='', score=''):
         """Initialize information about a book."""     
         self.info = {}   
         self.info['title'] = title
         self.info['author'] = author
-        self.info['year'] = year
-        self.info['isbn'] = isbn
+        if year:
+            self.info['year'] = year
+        else:
+            self.info['done'] = None
+        if isbn:
+            self.info['isbn'] = isbn
+        else:
+            self.info['isbn'] = None
         if done:
             self.info['done'] = done
         else:
@@ -25,7 +31,7 @@ class Book:
         if score:
             self.info['score'] = score
         else:
-            self.info['score'] = 0
+            self.info['score'] = None
    
     def done(self):
         """Record that we have done reading the book."""

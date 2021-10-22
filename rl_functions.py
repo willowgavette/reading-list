@@ -14,7 +14,7 @@ def load_l(filename):
         t_list = []
         for json_obj in book_list:
             book = json.loads(json_obj)
-            loaded_book = Book(book['title'], book['author'], book['year'], book['isbn'], book['status'], book['date'], book['review'], book['score'])
+            loaded_book = Book(book['title'], book['author'], book['year'], book['isbn'], book['done'], book['date'], book['review'], book['score'])
             t_list.append(loaded_book)
         return t_list
     
@@ -26,39 +26,41 @@ def create_l(filename):
     t_list.append(new_book)
     return  t_list
     
-def enter_book():
+def enter_book(title='', author=''):
     """Create a new book object and store user-entered info. Return created object."""
-    print("\nPlease enter some information on the book you'd like to add.")
-
-    # Create temporary variables to pass to the Book() class.
-    title = input("Title: ")
-    if title == '':
-        print("You must input a title!")
-        enter_book()
-    author = input("Author: ")
-    if author == '':
-        print("You must input an author!")
-        enter_book()
-    year = input("Publication year: ")
-    isbn = input("ISBN: ")
-    
-
-    # Check to make sure user entered the information correctly.
-    print("The information you entered is as follows:")
-    print(f"\tTitle: {title}")
-    print(f"\tAuthor: {author}")
-    print(f"\tPublication year: {year}")
-    print(f"\tISBN: {isbn}")
-    cont = input("Is this correct? (y/n): ")
-    if cont.lower().strip() == 'y':
-        new_book = Book(title.strip(), author.strip().title(), year.strip(), isbn.strip())
-        return new_book 
-        print(columns * '-')
-    elif cont.lower().strip() == 'n':
-        enter_book()     
+    if title and author:
+        new_book = Book(title, author)
+        return new_book
     else:
-        print("Invalid input detected! Please try again.")
-        enter_book()
+        print("\nPlease enter some information on the book you'd like to add.")
+        # Create temporary variables to pass to the Book() class.
+        title = input("Title: ")
+        if title == '':
+            print("You must input a title!")
+            enter_book()
+        author = input("Author: ")
+        if author == '':
+            print("You must input an author!")
+            enter_book()
+        year = input("Publication year: ")
+        isbn = input("ISBN: ")
+    
+        # Check to make sure user entered the information correctly.
+        print("The information you entered is as follows:")
+        print(f"\tTitle: {title}")
+        print(f"\tAuthor: {author}")
+        print(f"\tPublication year: {year}")
+        print(f"\tISBN: {isbn}")
+        cont = input("Is this correct? (y/n): ")
+        if cont.lower().strip() == 'y':
+            new_book = Book(title.strip(), author.strip().title(), year.strip(), isbn.strip())
+            return new_book 
+            print(columns * '-')
+        elif cont.lower().strip() == 'n':
+            enter_book()     
+        else:
+            print("Invalid input detected! Please try again.")
+            enter_book()
             
 def options():  
     """Print the list of options the user can choose from."""
@@ -81,11 +83,13 @@ def print_l(book_list):
         print(f"\nBook #{book_number}:")
         print(f"\t-Title: {book.info['title']}")
         print(f"\t-Author: {book.info['author']}")
-        print(f"\t-Publication year: {book.info['year']}")
-        print(f"\t-ISBN: {book.info['isbn']}")
+        if book.info['year']:
+            print(f"\t-Publication year: {book.info['year']}")
+        if book.info['isbn']:
+            print(f"\t-ISBN: {book.info['isbn']}")
         print(f"\t-Date & time entered: {book.info['date']}")
-        if book.info['status'] == True:
-            print("\t-Status: Completed")
+        if book.info['done'] == True:
+            print("\t-Completion status: Completed")
             if book.info['review']:
                 print("\t-Book review:")
                 print(f"{book.info['review']}")
@@ -93,29 +97,31 @@ def print_l(book_list):
                 print(f"\t-Score: {book.info['score']}/5")
             print(columns * '-')
         else:
-            print("\t-Status: Not completed")
+            print("\t-Completion status: Not completed")
         
 def print_b(book_obj):
     """Print a single book and all associated information."""
     print(f"\t-Title: {book_obj.info['title']}")
     print(f"\t-Author: {book_obj.info['author']}")
-    print(f"\t-Publication year: {book_obj.info['year']}")
-    print(f"\t-ISBN: {book_obj.info['isbn']}")
+    if book_obj.info['year']:
+        print(f"\t-Publication year: {book_obj.info['year']}")
+    if book_obj.info['isbn']:
+        print(f"\t-ISBN: {book_obj.info['isbn']}")
     print(f"\t-Date & time entered: {book_obj.info['date']}")
-    if book_obj.info['status'] == True:
-        print("\t-Status: Finished")
+    if book_obj.info['done'] == True:
+        print("\t-Completion status: Finished")
         if book_obj.info['review']:
             print("\t-Book review:")
             print(f"{book_obj.info['review']}")
         if book_obj.info['score']:
             print(f"\t-Score: {book_obj.info['score']}/5")
     else:
-        print("\t-Status: Not Finished")
+        print("\t-Completion status: Not finished")
     print(columns * '-')
             
 def review(book_obj):
     """Enter a review for a book you've finished."""
-    if book_obj.info['status'] == False:
+    if book_obj.info['done'] == False:
         print("You haven't finished this book yet! Please update the book entry first.")
         print(columns * '-')
     else:
@@ -132,7 +138,7 @@ def review(book_obj):
 def edit(book_obj):
     """Edit one of the books in the list."""
     print("The following information can be updated:")
-    print("\n1. Title\n2. Author\n3. Publication year\n4. ISBN\n5. Status")
+    print("\n1. Title\n2. Author\n3. Publication year\n4. ISBN\n5. Completion status")
 
     edit = input("Please enter the number you would like to edit: ")
     while edit:
@@ -201,7 +207,6 @@ def sort_l(book_list):
             for book in book_list:
                 if book.info['title'] == item:
                     print_b(book)
-                    print(columns * '-')
     if option.strip() == '2':
         author_list = []
         for book in book_list:
@@ -213,7 +218,6 @@ def sort_l(book_list):
             for book in book_list:
                 if book.info['author'] == item:
                     print_b(book)
-                    print(columns * '-')
     if option.strip() == '3':
         year_list = []
         for book in book_list:
@@ -225,7 +229,6 @@ def sort_l(book_list):
             for book in book_list:
                 if book.info['year'] == item:
                     print_b(book)
-                    print(columns * '-')
     if option.strip() == '4':
         year_list = []
         for book in book_list:
@@ -237,7 +240,6 @@ def sort_l(book_list):
             for book in book_list:
                 if book.info['year'] == item:
                     print_b(book)
-                    print(columns * '-')
     if option.strip() == '5':
         score_list = []
         for book in book_list:
@@ -250,7 +252,6 @@ def sort_l(book_list):
             for book in book_list:
                 if book.info['score'] == item:
                     print_b(book)
-                    print(columns * '-')
     if option.strip() == '6':
         score_list = []
         for book in book_list:
@@ -263,7 +264,6 @@ def sort_l(book_list):
             for book in book_list:
                 if book.info['score'] == item:
                     print_b(book)
-                    print(columns * '-')
                 
 def delete(book_list):
     """Delete an entry from the reading list."""
