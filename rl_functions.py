@@ -100,6 +100,7 @@ def print_l(book_list):
             print(columns * '-')
         else:
             print("\t-Completion status: Not completed")
+    return True
         
 def print_b(book_obj):
     """Print a single book and all associated information."""
@@ -120,6 +121,7 @@ def print_b(book_obj):
     else:
         print("\t-Completion status: Not finished")
     print(columns * '-')
+    return True
             
 def review(book_obj):
     """Enter a review for a book you've finished."""
@@ -256,6 +258,7 @@ def sort_l(book_list, option):
             for book in book_list:
                 if book.info['score'] == item:
                     print_b(book)
+    return True
                 
 def delete(book_list, to_del):
     """Delete an entry from the reading list."""

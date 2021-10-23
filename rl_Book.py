@@ -11,7 +11,7 @@ class Book:
         if year:
             self.info['year'] = year
         else:
-            self.info['done'] = None
+            self.info['year'] = None
         if isbn:
             self.info['isbn'] = isbn
         else:
