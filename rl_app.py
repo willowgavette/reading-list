@@ -54,13 +54,24 @@ while True:
         elif len(book_list) == 1:
             print("\nYou can't sort a list with only one entry!")
         else:
-            sort_l(book_list)
+            print("You may sort your reading list by:")
+            print("\t1. Title")
+            print("\t2. Author")
+            print("\t3. Year of publication(newest to oldest)")
+            print("\t4. Year of publication(oldest to newest)")
+            print("\t5. Score(highest to lowest)")
+            print("\t6. Score(lowest to highest)")
+            option = input("Please enter the number of the option you'd like: ")
+            sort_l(book_list, option)
     elif task == '6':
         # If the list is empty, alert user.
         if len(book_list) == 0:
             print("\nThere are no entries to delete!")
         else:
-         delete(book_list)
+            print_l(book_list)
+            to_del = input("Please enter the number of the entry you would like to delete: ")
+            to_del = int(to_del)
+            delete(book_list, to_del)
     elif task == '7':
         # If the user has deleted all entries, erase JSON file where the books are stored.
         if len(book_list) == 0:
@@ -70,6 +81,7 @@ while True:
             break
         else:
             save_l(book_list)
+            print("Thank you for using our reading list app!")
             break
     else:
         print("Invalid input detected! Please try again.")

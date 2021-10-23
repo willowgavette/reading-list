@@ -49,8 +49,10 @@ def enter_book(title='', author=''):
         print("The information you entered is as follows:")
         print(f"\tTitle: {title}")
         print(f"\tAuthor: {author}")
-        print(f"\tPublication year: {year}")
-        print(f"\tISBN: {isbn}")
+        if title:
+            print(f"\tPublication year: {year}")
+        if isbn:
+            print(f"\tISBN: {isbn}")
         cont = input("Is this correct? (y/n): ")
         if cont.lower().strip() == 'y':
             new_book = Book(title.strip(), author.strip().title(), year.strip(), isbn.strip())
@@ -139,7 +141,6 @@ def edit(book_obj):
     """Edit one of the books in the list."""
     print("The following information can be updated:")
     print("\n1. Title\n2. Author\n3. Publication year\n4. ISBN\n5. Completion status")
-
     edit = input("Please enter the number you would like to edit: ")
     while edit:
         if edit == '1':
@@ -178,24 +179,15 @@ def edit(book_obj):
 def save_l(book_list, filename='C:\\Users\\Admin\\Documents\\GitHub\\reading-list\\reading_list.json'):
     """Save the list of books to a JSON file."""
     print("Saving your list...")
-    with open(filename, 'w') as file_obj:
+    with open(filename, 'w') as f:
         for book in book_list:
-            json.dump(book.info, file_obj)
-            file_obj.write('\n')
+            json.dump(book.info, f)
+            f.write('\n')
         print("List successfully saved!")
         print(columns * '-')
-    print("Thank you for using our reading list app!")
 
-def sort_l(book_list):
+def sort_l(book_list, option):
     """Sort the list of books according to parameters given by the user."""
-    print("You may sort your reading list by:")
-    print("\t1. Title")
-    print("\t2. Author")
-    print("\t3. Year of publication(newest to oldest)")
-    print("\t4. Year of publication(oldest to newest)")
-    print("\t5. Score(highest to lowest)")
-    print("\t6. Score(lowest to highest)")
-    option = input("Please enter the number of the option you'd like: ")
     if option.strip() == '1':
         title_list = []
         for book in book_list:
@@ -265,12 +257,9 @@ def sort_l(book_list):
                 if book.info['score'] == item:
                     print_b(book)
                 
-def delete(book_list):
+def delete(book_list, to_del):
     """Delete an entry from the reading list."""
-    print_l(book_list)
-    to_del = input("Please enter the number of the entry you would like to delete: ")
-    to_del = int(to_del)
-    book_list.remove(book_list[to_del - 1])
+    book_list.remove(book_list[to_del-1])
     print("Entry successfully deleted!")
     print(columns * '-')
     

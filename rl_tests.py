@@ -17,6 +17,7 @@ class FunctionsTestCase(unittest.TestCase):
 
     def test_review(self):
         """Does entering a review and score for a book work?"""
+        print("\n***Enter nothing for review, enter 0 for score***")
         review_book = Book('test', 'test', done=True)
         review(review_book) 
         self.setup_book.done()
@@ -41,7 +42,7 @@ class FunctionsTestCase(unittest.TestCase):
     def test_create_l(self):
         """Does creating a new list work?"""
         test_filename = 'C:\\Users\\Admin\\Documents\\GitHub\\reading-list\\DNE.json'
-        print("***Does not matter what info you enter***")
+        print("\n***Does not matter what info you enter***")
         test_l = create_l(test_filename) # Data entered does not matter, we're simply testing whether or not a list is able to be created
         self.assertTrue(test_l)
         
@@ -50,8 +51,14 @@ class FunctionsTestCase(unittest.TestCase):
         book_list = []
         book_list.append(self.setup_book)
         book_list.append(self.other_setup_book)
-        delete(book_list) # make sure to delete the first entry
+        delete(book_list, 1)
         self.assertNotIn(self.setup_book, book_list)
+        
+    def test_edit(self):
+        """Does editing a book in the list work?"""
+        initial_book = self.setup_book
+        edit(self.setup_book) # change whatever you like here
+        self.assertNotEqual(self.setup_book, initial_book)
 
 if __name__ == '__main__':
     unittest.main()
