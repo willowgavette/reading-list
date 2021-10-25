@@ -1,10 +1,12 @@
 from rl_Book import Book
 import json
 import shutil
+import wikipediaapi
 
-columns, lines = shutil.get_terminal_size()
+columns, lines = shutil.get_terminal_size() # Getting size of terminal for pretty printing
 columns = int(columns)
 lines = int(lines)
+wiki = wikipediaapi.Wikipedia('en') # Creating a wikipedia object for wikipedia summaries
 
 # The list of functions we need to actually manipulate data inside our reading list.
 
@@ -72,7 +74,8 @@ def options():
     print("\n4. Review and score a book")
     print("\n5. Sort your reading list")
     print("\n6. Delete an entry from the list")
-    print("\n7. Save and quit")
+    print("\n7. Get Wikipedia.org summary for a book")
+    print("\n8. Save and quit")
     option = input("Please enter the number of the option you'd like: ")
     print(columns * '-')
     return option.strip()
@@ -259,10 +262,20 @@ def sort_l(book_list, option):
                 if book.info['score'] == item:
                     print_b(book)
     return True
+
+def get_summary(book_obj):
+    """Get a short summary of a book from Wikipedia and display it to the user."""
+    book_page = wiki.page(book_obj.info['title'])
+    unparsed_sum = book_page.text
+    book_sum = unparsed_sum.split("\n")[0]
+    print(columns * '-')
+    print(f"Wikipedia summary for {book_obj.info['title']}:")
+    print("\t" + book_sum)
+    print(columns * '-')
+    return True
                 
 def delete(book_list, to_del):
     """Delete an entry from the reading list."""
     book_list.remove(book_list[to_del-1])
     print("Entry successfully deleted!")
     print(columns * '-')
-    

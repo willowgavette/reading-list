@@ -66,7 +66,17 @@ while True:
             to_del = int(to_del)
             delete(book_list, to_del)
     elif task == '7':
-        # If the user has deleted all entries, erase JSON file where the books are stored.
+        if len(book_list) == 0:
+            print("There are no entries to summarize!")
+        elif len(book_list) == 1:
+            get_summary(book_list[0])
+        else:
+            print_l(book_list)
+            to_sum = input("Please enter the number of the book you'd like to summarize: ")
+            to_sum = int(to_sum)
+            get_summary(book_list[to_sum-1])
+    elif task == '8':
+    # If the user has deleted all entries, erase JSON file where the books are stored.
         if len(book_list) == 0:
             os.remove(filename)
             print("All entries deleted.")
