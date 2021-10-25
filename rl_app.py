@@ -4,8 +4,7 @@ import os
 
 # Check storage to see if a list already exists.
 # If one does, load it. If one does not, create one.
-filename = 'C:\\Users\\Admin\\Documents\\GitHub\\reading-list\\reading_list.json'
-
+filename = './reading_list.json'
 try:
     book_list = load_l(filename)
 except FileNotFoundError:
@@ -25,21 +24,18 @@ while True:
         new_book = enter_book()
         book_list.append(new_book)
     elif task == '3':
-        # If there are no entries to update, alert user.
         if len(book_list) == 0:
             print("\nThere are no entries to update!")
         # If there is only one book in the list, automatically update that book.
-        elif len(book_list) > 1:
+        elif len(book_list == 1):
+            edit(book_list[0])
+        else:
             print_l(book_list)
             edit_num = int(input("Please enter the number of the book you would like to edit: "))
             edit(book_list[edit_num-1])
-        else:
-            edit(book_list[0])
     elif task == '4':
-        # If there are no entries to review & score, alert user.
         if len(book_list) == 0:
             print("\nThere are no entries to review & score!")
-        # If there is only one book in the list, automatically review & score that book.
         elif len(book_list) > 1:
             print_l(book_list)
             review_num = int(input("Please enter the number of the book you would like to review: "))
@@ -47,10 +43,8 @@ while True:
         else:
             review(book_list[0])          
     elif task == '5':
-        # If there are no entries to sort, alert user.
         if len(book_list) == 0:
             print("\nThere are no entries to sort!")
-        # If there is only one book in the list, alert user.
         elif len(book_list) == 1:
             print("\nYou can't sort a list with only one entry!")
         else:
@@ -64,7 +58,6 @@ while True:
             option = input("Please enter the number of the option you'd like: ")
             sort_l(book_list, option)
     elif task == '6':
-        # If the list is empty, alert user.
         if len(book_list) == 0:
             print("\nThere are no entries to delete!")
         else:
