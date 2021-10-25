@@ -11,7 +11,7 @@ class FunctionsTestCase(unittest.TestCase):
         self.other_setup_book = Book('other test title', 'other test author')
         
     def test_done_update(self):
-        """Does updating a book's done work?"""
+        """Does updating a book's status work?"""
         self.setup_book.done()
         self.assertTrue(self.setup_book.info['done'])
         
