@@ -68,14 +68,14 @@ def enter_book(title='', author=''):
             
 def options():  
     """Print the list of options the user can choose from."""
-    print("\n1. Check your reading list")
-    print("\n2. Enter a new book")
-    print("\n3. Update a book entry")
-    print("\n4. Review and score a book")
-    print("\n5. Sort your reading list")
-    print("\n6. Delete an entry from the list")
-    print("\n7. Get Wikipedia.org summary for a book")
-    print("\n8. Save and quit")
+    print("1. Check your reading list")
+    print("2. Enter a new book")
+    print("3. Update a book entry")
+    print("4. Review and score a book")
+    print("5. Sort your reading list")
+    print("6. Delete an entry from the list")
+    print("7. Get Wikipedia.org summary for a book")
+    print("8. Save and quit")
     option = input("Please enter the number of the option you'd like: ")
     print(columns * '-')
     return option.strip()
@@ -266,13 +266,17 @@ def sort_l(book_list, option):
 def get_summary(book_obj):
     """Get a short summary of a book from Wikipedia and display it to the user."""
     book_page = wiki.page(book_obj.info['title'])
-    unparsed_sum = book_page.text
-    book_sum = unparsed_sum.split("\n")[0]
-    print(columns * '-')
-    print(f"Wikipedia summary for {book_obj.info['title']}:")
-    print("\t" + book_sum)
-    print(columns * '-')
-    return True
+    if book_page.exists():
+        unparsed_sum = book_page.text
+        book_sum = unparsed_sum.split("\n")[0]
+        print(columns * '-')
+        print(f"Wikipedia summary for {book_obj.info['title']}:")
+        print("\t" + book_sum)
+        print(columns * '-')
+        return True
+    else:
+        print(f"We're sorry, but it looks like {book_obj.info['title']} does not have a Wikipedia entry.")
+        return False
                 
 def delete(book_list, to_del):
     """Delete an entry from the reading list."""

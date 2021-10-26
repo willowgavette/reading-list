@@ -10,7 +10,7 @@ basic functionality:
 
 additional functionality:
 [DONE] tests to make sure everything in the app works exactly the way i want it to and cannot go wrong
-- find online links about book (wikipedia page, amazon purchase location, etc)
+[DONE] Get summary of book from Wikipedia
 - able to fill in information about book based on given info (put in name of book and author, app autofills year published and ISBN based on internet search)
 - display cover of book based on google image search
 - link to audiobook

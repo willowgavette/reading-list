@@ -20,10 +20,10 @@ class FunctionsTestCase(unittest.TestCase):
         Does giving a correct filename result in a loaded list?
         Does giving an incorrect filename result in a FileNotFoundError?
         """
-        filename = 'C:\\Users\\Admin\\Documents\\GitHub\\reading-list\\reading_list.json'
+        filename = './reading_list.json'
         test_book_list = load_l(filename)
         self.assertTrue(test_book_list)
-        test_filename = 'C:\\Users\\Admin\\Documents\\GitHub\\reading-list\\DNE.json'
+        test_filename = './DNE.json'
         new_test_book_list = []
         try:
             new_test_book_list = load_l(test_filename)
@@ -74,6 +74,12 @@ class FunctionsTestCase(unittest.TestCase):
         book_list.append(self.setup_book)
         book_list.append(self.other_setup_book)
         self.assertTrue(sort_l(book_list, '1'))
+
+    def test_get_summary(self):
+        """Does getting a summary from Wikipedia work?"""
+        real_book = Book("Harry Potter and the Philosopher's Stone", "J. K. Rowling")
+        self.assertTrue(get_summary(real_book))
+        self.assertFalse(get_summary(self.setup_book))
     
     def test_delete(self):
         """Does deleting an entry from the reading list work?"""
