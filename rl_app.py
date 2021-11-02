@@ -7,7 +7,7 @@ filename = './reading_list.json'
 try:
     book_list = load_l(filename)
 except FileNotFoundError:
-    create_l(filename)
+    create_l()
     
 print("\nWelcome to your reading list! You can:")
 

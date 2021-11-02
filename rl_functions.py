@@ -3,11 +3,10 @@ import json
 import shutil
 import wikipediaapi
 
-columns, lines = shutil.get_terminal_size() # Getting size of terminal for pretty printing
+columns, lines = shutil.get_terminal_size()  # Getting size of terminal for pretty printing
 columns = int(columns)
-wiki = wikipediaapi.Wikipedia('en') # Creating a wikipedia object for wikipedia summaries
+wiki = wikipediaapi.Wikipedia('en')  # Creating a wikipedia object for wikipedia summaries
 
-# The list of functions we need to actually manipulate data inside our reading list.
 
 def load_l(filename):
     """Load reading list into memory from JSON file."""
@@ -27,15 +26,17 @@ def load_l(filename):
             )
             t_list.append(loaded_book)
         return t_list
-    
-def create_l(filename):
+
+
+def create_l():
     """Create a new list and enter the first book into that list."""
     print("Welcome to the reading list app! Let's get your very first book entered.")
     t_list = []
     new_book = enter_book()
     t_list.append(new_book)
-    return  t_list
-    
+    return t_list
+
+
 def enter_book(title='', author=''):
     """Create a new book object and store user-entered info. Return created object."""
     if title and author:
@@ -55,7 +56,8 @@ def enter_book(title='', author=''):
         year = input("Publication year: ")
         isbn = input("ISBN: ")
 
-        print("The information you entered is as follows:") # Check to make sure user entered the information correctly.
+        # Check to make sure user entered the information correctly
+        print("The information you entered is as follows:")
         print(f"\tTitle: {title}\n"
               f"\tAuthor: {author}")
         if year:
@@ -70,14 +72,15 @@ def enter_book(title='', author=''):
                 year.strip(),
                 isbn.strip(),
             )
-            return new_book 
             print(columns * '-')
+            return new_book
         elif cont.lower().strip() == 'n':
             enter_book()     
         else:
             print("Invalid input detected! Please try again.")
             enter_book()
-            
+
+
 def options():  
     """Print the list of options the user can choose from."""
     print("1. Check your reading list\n"
@@ -92,6 +95,7 @@ def options():
     print(columns * '-')
     return option.strip()
 
+
 def print_l(book_list):
     """Print the entire saved list of books."""  
     book_number = 0
@@ -105,7 +109,7 @@ def print_l(book_list):
         if book.info['isbn']:
             print(f"\t-ISBN: {book.info['isbn']}")
         print(f"\t-Date & time entered: {book.info['date']}")
-        if book.info['done'] == True:
+        if book.info['done']:
             print("\t-Completion status: Completed")
             if book.info['review']:
                 print("\t-Book review:\n"
@@ -116,7 +120,8 @@ def print_l(book_list):
             print("\t-Completion status: Not completed")
         print(columns * '-')
     return True
-        
+
+
 def print_b(book_obj):
     """Print a single book and all associated information."""
     print(f"\t-Title: {book_obj.info['title']}\n"
@@ -126,7 +131,7 @@ def print_b(book_obj):
     if book_obj.info['isbn']:
         print(f"\t-ISBN: {book_obj.info['isbn']}")
     print(f"\t-Date & time entered: {book_obj.info['date']}")
-    if book_obj.info['done'] == True:
+    if book_obj.info['done']:
         print("\t-Completion status: Finished")
         if book_obj.info['review']:
             print("\t-Book review:\n"
@@ -137,10 +142,11 @@ def print_b(book_obj):
         print("\t-Completion status: Not finished")
     print(columns * '-')
     return True
-            
+
+
 def review(book_obj):
     """Enter a review for a book you've finished."""
-    if book_obj.info['done'] == False:
+    if not book_obj.info['done']:
         print("You haven't finished this book yet! Please update the book entry first.")
         print(columns * '-')
     else:
@@ -153,6 +159,7 @@ def review(book_obj):
             print(columns * '-')
         else:
             print("Invalid input detected!\nRemember to score the book on a scale from one to five.")
+
 
 def edit(book_obj):
     """Edit one of the books in the list."""
@@ -189,7 +196,7 @@ def edit(book_obj):
             print(columns * '-')
             break
         elif edit == '5':
-            if book_obj['done'] == True:
+            if book_obj['done']:
                 book_obj['done'] = False
                 print("Completion status updated.")
                 print(columns * '-')
@@ -201,7 +208,8 @@ def edit(book_obj):
                 break
         else:
             print("Invalid input detected! Please try again.")
-            edit(book_obj)   
+            edit(book_obj)
+
 
 def save_l(book_list, filename='C:\\Users\\Admin\\Documents\\GitHub\\reading-list\\reading_list.json'):
     """Save the list of books to a JSON file."""
@@ -212,6 +220,7 @@ def save_l(book_list, filename='C:\\Users\\Admin\\Documents\\GitHub\\reading-lis
             f.write('\n')
         print("List successfully saved!")
         print(columns * '-')
+
 
 def sort_l(book_list, option):
     """Sort the list of books according to parameters given by the user."""
@@ -285,6 +294,7 @@ def sort_l(book_list, option):
                     print_b(book)
     return True
 
+
 def get_summary(book_obj):
     """Get a short summary of a book from Wikipedia and display it to the user."""
     book_page = wiki.page(book_obj.info['title'])
@@ -299,7 +309,8 @@ def get_summary(book_obj):
     else:
         print(f"We're sorry, but it looks like {book_obj.info['title']} does not have a Wikipedia entry.")
         return False
-                
+
+
 def delete(book_list, to_del):
     """Delete an entry from the reading list."""
     book_list.remove(book_list[to_del-1])
