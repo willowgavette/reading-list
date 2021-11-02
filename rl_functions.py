@@ -270,28 +270,21 @@ def sort_l(book_list, option):
                     print_b(book)
     if option.strip() == '5':
         score_list = []
-        for book in book_list:
-            temp_score = book.info['score']
-            if temp_score:
-                score_list.append(temp_score)
-        score_list.sort(reverse=True)
-        print("Here is your reading list sorted by score, from highest to lowest:")
-        for item in score_list:
+        for _ in range(1, 6):
             for book in book_list:
-                if book.info['score'] == item:
-                    print_b(book)
+                if book.info['score'] == _:
+                    score_list.append(book)
+        score_list.reverse()
+        print("Here is your reading list sorted by score, from highest to lowest:")
+        print_l(score_list)
     if option.strip() == '6':
         score_list = []
-        for book in book_list:
-            temp_score = book.info['score']
-            if temp_score:
-                score_list.append(temp_score)
-        score_list.sort()
-        print("Here is your reading list sorted by score, from lowest to highest:")
-        for item in score_list:
+        for _ in range(1, 6):
             for book in book_list:
-                if book.info['score'] == item:
-                    print_b(book)
+                if book.info['score'] == _:
+                    score_list.append(book)
+        print("Here is your reading list sorted by score, from lowest to highest:")
+        print_l(score_list)
     return True
 
 

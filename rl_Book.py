@@ -6,9 +6,10 @@ class Book:
     
     def __init__(self, title, author, year='', isbn='', done=False, date='', review='', score=''):
         """Initialize information about a book."""     
-        self.info = {}   
-        self.info['title'] = title
-        self.info['author'] = author
+        self.info = {
+            'title': title,
+            'author': author,
+        }
         if year:
             self.info['year'] = year
         else:
