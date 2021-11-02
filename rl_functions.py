@@ -269,22 +269,9 @@ def sort_l(book_list, option):
                 if book.info['year'] == item:
                     print_b(book)
     if option.strip() == '5':
-        score_list = []
-        for _ in range(1, 6):
-            for book in book_list:
-                if book.info['score'] == _:
-                    score_list.append(book)
-        score_list.reverse()
-        print("Here is your reading list sorted by score, from highest to lowest:")
-        print_l(score_list)
+        score_sort(book_list, reverse=True)
     if option.strip() == '6':
-        score_list = []
-        for _ in range(1, 6):
-            for book in book_list:
-                if book.info['score'] == _:
-                    score_list.append(book)
-        print("Here is your reading list sorted by score, from lowest to highest:")
-        print_l(score_list)
+        score_sort(book_list)
     return True
 
 
@@ -294,11 +281,18 @@ def get_summary(book_obj):
     if book_page.exists():
         unparsed_sum = book_page.text
         book_sum = unparsed_sum.split("\n")[0]
-        print(columns * '-')
-        print(f"Wikipedia summary for {book_obj.info['title']}:\n"
-              "\t" + book_sum)
-        print(columns * '-')
-        return True
+        if book_sum == f"{book_obj.info['title']} may refer to:":
+            print(columns * '*')
+            print("It looks like there are multiple Wikipedia articles under that name.\n"
+                  "You'll have to check wikipedia.org to see a summary. Sorry!")
+            print(columns * '*')
+            return False
+        else:
+            print(columns * '-')
+            print(f"Wikipedia summary for {book_obj.info['title']}:\n"
+                  "\t" + book_sum)
+            print(columns * '-')
+            return True
     else:
         print(f"We're sorry, but it looks like {book_obj.info['title']} does not have a Wikipedia entry.")
         return False
@@ -309,3 +303,19 @@ def delete(book_list, to_del):
     book_list.remove(book_list[to_del-1])
     print("Entry successfully deleted!")
     print(columns * '-')
+
+
+def score_sort(book_list, reverse=False):
+    """Minor function to sort book list by score. Reverse option flips the sort."""
+    score_list = []
+    for _ in range(1, 6):
+        for book in book_list:
+            if book.info['score'] == _:
+                score_list.append(book)
+    if reverse:
+        score_list.reverse()
+        print("Here is your reading list sorted by score, from highest to lowest:")
+        print_l(score_list)
+    else:
+        print("Here is your reading list sorted by score, from lowest to highest:")
+        print_l(score_list)
