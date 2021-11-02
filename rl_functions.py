@@ -5,7 +5,6 @@ import wikipediaapi
 
 columns, lines = shutil.get_terminal_size() # Getting size of terminal for pretty printing
 columns = int(columns)
-lines = int(lines)
 wiki = wikipediaapi.Wikipedia('en') # Creating a wikipedia object for wikipedia summaries
 
 # The list of functions we need to actually manipulate data inside our reading list.
@@ -16,7 +15,16 @@ def load_l(filename):
         t_list = []
         for json_obj in book_list:
             book = json.loads(json_obj)
-            loaded_book = Book(book['title'], book['author'], book['year'], book['isbn'], book['done'], book['date'], book['review'], book['score'])
+            loaded_book = Book(
+                book['title'],
+                book['author'],
+                book['year'],
+                book['isbn'],
+                book['done'],
+                book['date'],
+                book['review'],
+                book['score'],
+            )
             t_list.append(loaded_book)
         return t_list
     
@@ -46,18 +54,22 @@ def enter_book(title='', author=''):
             enter_book()
         year = input("Publication year: ")
         isbn = input("ISBN: ")
-    
-        # Check to make sure user entered the information correctly.
-        print("The information you entered is as follows:")
-        print(f"\tTitle: {title}")
-        print(f"\tAuthor: {author}")
-        if title:
+
+        print("The information you entered is as follows:") # Check to make sure user entered the information correctly.
+        print(f"\tTitle: {title}\n"
+              f"\tAuthor: {author}")
+        if year:
             print(f"\tPublication year: {year}")
         if isbn:
             print(f"\tISBN: {isbn}")
         cont = input("Is this correct? (y/n): ")
         if cont.lower().strip() == 'y':
-            new_book = Book(title.strip(), author.strip().title(), year.strip(), isbn.strip())
+            new_book = Book(
+                title.strip(),
+                author.strip().title(),
+                year.strip(),
+                isbn.strip(),
+            )
             return new_book 
             print(columns * '-')
         elif cont.lower().strip() == 'n':
@@ -68,14 +80,14 @@ def enter_book(title='', author=''):
             
 def options():  
     """Print the list of options the user can choose from."""
-    print("1. Check your reading list")
-    print("2. Enter a new book")
-    print("3. Update a book entry")
-    print("4. Review and score a book")
-    print("5. Sort your reading list")
-    print("6. Delete an entry from the list")
-    print("7. Get Wikipedia.org summary for a book")
-    print("8. Save and quit")
+    print("1. Check your reading list\n"
+          "2. Enter a new book\n"
+          "3. Update a book entry\n"
+          "4. Review and score a book\n"
+          "5. Sort your reading list\n"
+          "6. Delete an entry from the list\n"
+          "7. Get Wikipedia.org summary for a book\n"
+          "8. Save and quit")
     option = input("Please enter the number of the option you'd like: ")
     print(columns * '-')
     return option.strip()
@@ -85,9 +97,9 @@ def print_l(book_list):
     book_number = 0
     for book in book_list:
         book_number += 1
-        print(f"\nBook #{book_number}:")
-        print(f"\t-Title: {book.info['title']}")
-        print(f"\t-Author: {book.info['author']}")
+        print(f"\nBook #{book_number}:\n"
+              f"\t-Title: {book.info['title']}\n"
+              f"\t-Author: {book.info['author']}")
         if book.info['year']:
             print(f"\t-Publication year: {book.info['year']}")
         if book.info['isbn']:
@@ -96,19 +108,19 @@ def print_l(book_list):
         if book.info['done'] == True:
             print("\t-Completion status: Completed")
             if book.info['review']:
-                print("\t-Book review:")
-                print(f"{book.info['review']}")
+                print("\t-Book review:\n"
+                      f"{book.info['review']}")
             if book.info['score'] != 0:
                 print(f"\t-Score: {book.info['score']}/5")
-            print(columns * '-')
         else:
             print("\t-Completion status: Not completed")
+        print(columns * '-')
     return True
         
 def print_b(book_obj):
     """Print a single book and all associated information."""
-    print(f"\t-Title: {book_obj.info['title']}")
-    print(f"\t-Author: {book_obj.info['author']}")
+    print(f"\t-Title: {book_obj.info['title']}\n"
+          f"\t-Author: {book_obj.info['author']}")
     if book_obj.info['year']:
         print(f"\t-Publication year: {book_obj.info['year']}")
     if book_obj.info['isbn']:
@@ -117,8 +129,8 @@ def print_b(book_obj):
     if book_obj.info['done'] == True:
         print("\t-Completion status: Finished")
         if book_obj.info['review']:
-            print("\t-Book review:")
-            print(f"{book_obj.info['review']}")
+            print("\t-Book review:\n"
+                  f"{book_obj.info['review']}")
         if book_obj.info['score']:
             print(f"\t-Score: {book_obj.info['score']}/5")
     else:
@@ -144,8 +156,12 @@ def review(book_obj):
 
 def edit(book_obj):
     """Edit one of the books in the list."""
-    print("The following information can be updated:")
-    print("\n1. Title\n2. Author\n3. Publication year\n4. ISBN\n5. Completion status")
+    print("The following information can be updated:\n"
+          "\n1. Title"
+          "\n2. Author"
+          "\n3. Publication year"
+          "\n4. ISBN"
+          "\n5. Completion status")
     edit = input("Please enter the number you would like to edit: ")
     while edit:
         if edit == '1':
@@ -173,10 +189,16 @@ def edit(book_obj):
             print(columns * '-')
             break
         elif edit == '5':
-            book_obj.done()
-            print("Congrats on finishing the book!")
-            print(columns * '-')
-            break
+            if book_obj['done'] == True:
+                book_obj['done'] = False
+                print("Completion status updated.")
+                print(columns * '-')
+                break
+            else:
+                book_obj.done()
+                print("Congrats on finishing the book!")
+                print(columns * '-')
+                break
         else:
             print("Invalid input detected! Please try again.")
             edit(book_obj)   
@@ -270,8 +292,8 @@ def get_summary(book_obj):
         unparsed_sum = book_page.text
         book_sum = unparsed_sum.split("\n")[0]
         print(columns * '-')
-        print(f"Wikipedia summary for {book_obj.info['title']}:")
-        print("\t" + book_sum)
+        print(f"Wikipedia summary for {book_obj.info['title']}:\n"
+              "\t" + book_sum)
         print(columns * '-')
         return True
     else:

@@ -1,5 +1,4 @@
 from rl_functions import *
-from rl_Book import *
 import os
 
 # Check storage to see if a list already exists.
@@ -26,13 +25,12 @@ while True:
     elif task == '3':
         if len(book_list) == 0:
             print("\nThere are no entries to update!")
-        # If there is only one book in the list, automatically update that book.
-        elif len(book_list == 1):
-            edit(book_list[0])
-        else:
+        elif len(book_list) > 1:
             print_l(book_list)
             edit_num = int(input("Please enter the number of the book you would like to edit: "))
-            edit(book_list[edit_num-1])
+            edit(book_list[edit_num - 1])
+        else:  # If there is only one book in the list, automatically update that book.
+            edit(book_list[0])
     elif task == '4':
         if len(book_list) == 0:
             print("\nThere are no entries to review & score!")
@@ -45,18 +43,18 @@ while True:
     elif task == '5':
         if len(book_list) == 0:
             print("\nThere are no entries to sort!")
-        elif len(book_list) == 1:
-            print("\nYou can't sort a list with only one entry!")
-        else:
-            print("You may sort your reading list by:")
-            print("\t1. Title")
-            print("\t2. Author")
-            print("\t3. Year of publication(newest to oldest)")
-            print("\t4. Year of publication(oldest to newest)")
-            print("\t5. Score(highest to lowest)")
-            print("\t6. Score(lowest to highest)")
+        elif len(book_list) > 1:
+            print("You may sort your reading list by:\n"
+                  "\t1. Title\n"
+                  "\t2. Author\n"
+                  "\t3. Year of publication(newest to oldest)\n"
+                  "\t4. Year of publication(oldest to newest)\n"
+                  "\t5. Score(highest to lowest)\n"
+                  "\t6. Score(lowest to highest)")
             option = input("Please enter the number of the option you'd like: ")
             sort_l(book_list, option)
+        else:
+            print("\nYou can't sort a list with only one entry!")
     elif task == '6':
         if len(book_list) == 0:
             print("\nThere are no entries to delete!")
@@ -76,11 +74,11 @@ while True:
             to_sum = int(to_sum)
             get_summary(book_list[to_sum-1])
     elif task == '8':
-    # If the user has deleted all entries, erase JSON file where the books are stored.
+        # If the user has deleted all entries, erase JSON file where the books are stored.
         if len(book_list) == 0:
             os.remove(filename)
-            print("All entries deleted.")
-            print("Thank you for using our reading list app!")
+            print("All entries deleted.\n"
+                  "Thank you for using our reading list app!")
             break
         else:
             save_l(book_list)
