@@ -17,12 +17,12 @@ def load_l(filename):
             loaded_book = Book(
                 book['title'],
                 book['author'],
-                book['year'],
-                book['isbn'],
-                book['done'],
-                book['date'],
-                book['review'],
-                book['score'],
+                year=book['year'],
+                isbn=book['isbn'],
+                date=book['date'],
+                done=book['done'],
+                review=book['review'],
+                score=book['score'],
             )
             t_list.append(loaded_book)
         return t_list
@@ -69,8 +69,8 @@ def enter_book(title='', author=''):
             new_book = Book(
                 title.strip(),
                 author.strip().title(),
-                year.strip(),
-                isbn.strip(),
+                year=year.strip(),
+                isbn=isbn.strip(),
             )
             print(columns * '-')
             return new_book
@@ -114,7 +114,9 @@ def print_l(book_list):
             if book.info['review']:
                 print("\t-Book review:\n"
                       f"{book.info['review']}")
-            if book.info['score'] != 0:
+            if book.info['score'] == None:
+                print(f"\t-You have not scored this book yet.")
+            else:
                 print(f"\t-Score: {book.info['score']}/5")
         else:
             print("\t-Completion status: Not completed")
@@ -196,8 +198,8 @@ def edit(book_obj):
             print(columns * '-')
             break
         elif edit == '5':
-            if book_obj['done']:
-                book_obj['done'] = False
+            if book_obj.info['done']:
+                book_obj.info['done'] = False
                 print("Completion status updated.")
                 print(columns * '-')
                 break
