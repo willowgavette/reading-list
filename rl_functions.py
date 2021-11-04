@@ -97,7 +97,7 @@ def options():
 
 
 def print_l(book_list):
-    """Print the entire saved list of books."""  
+    """Print the entire saved list of books."""
     book_number = 0
     for book in book_list:
         book_number += 1
@@ -165,52 +165,31 @@ def review(book_obj):
 
 def edit(book_obj):
     """Edit one of the books in the list."""
+    options = ['Title', 'Author', 'Year', 'ISBN', 'Completion status']
     print("The following information can be updated:\n"
           "\n1. Title"
           "\n2. Author"
-          "\n3. Publication year"
+          "\n3. Year"
           "\n4. ISBN"
           "\n5. Completion status")
-    edit = input("Please enter the number you would like to edit: ")
-    while edit:
-        if edit == '1':
-            change = input("Please enter the updated title: ")
-            book_obj.info['title'] = change.strip()
-            print("Title successfully updated.")
-            print(columns * '-')
-            break
-        elif edit == '2':
-            change = input("Please enter the updated author: ")
-            book_obj.info['author'] = change.strip().title()
-            print("Author successfully updated.")
-            print(columns * '-')
-            break
-        elif edit == '3':
-            change = input("Please enter the updated year: ")
-            book_obj.info['year'] = change.strip()
-            print("Year successfully updated.")
-            print(columns * '-')
-            break
-        elif edit == '4':
-            change = input("Please enter the updated ISBN: ")
-            book_obj.info['isbn'] = change.strip()
-            print("ISBN successfully updated.")
-            print(columns * '-')
-            break
-        elif edit == '5':
-            if book_obj.info['done']:
-                book_obj.info['done'] = False
-                print("Completion status updated.")
-                print(columns * '-')
-                break
-            else:
-                book_obj.done()
-                print("Congrats on finishing the book!")
-                print(columns * '-')
-                break
+    edit = int(input("Please enter the number you would like to edit: "))
+    if edit != 5:
+        change = input(f"Please enter the updated {options[edit-1]}: ")
+        temp_str = str(options[edit-1])
+        book_obj.info[temp_str.lower()] = change.strip()
+        print(f"{options[edit-1]} successfully updated.")
+        print(columns * '-')
+    elif edit == 5:
+        if book_obj.info['done']:
+            book_obj.info['done'] = False
+            print("Completion status updated.")
         else:
-            print("Invalid input detected! Please try again.")
-            edit(book_obj)
+            book_obj.done()
+            print("Congrats on finishing the book!")
+        print(columns * '-')
+    else:
+        print("Invalid input detected! Please try again.")
+        edit(book_obj)
 
 
 def save_l(book_list, filename='C:\\Users\\Admin\\Documents\\GitHub\\reading-list\\reading_list.json'):
