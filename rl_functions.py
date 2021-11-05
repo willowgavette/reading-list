@@ -14,16 +14,7 @@ def load_l(filename):
         t_list = []
         for json_obj in book_list:
             book = json.loads(json_obj)
-            loaded_book = Book(
-                book['title'],
-                book['author'],
-                year=book['year'],
-                isbn=book['isbn'],
-                date=book['date'],
-                done=book['done'],
-                review=book['review'],
-                score=book['score'],
-            )
+            loaded_book = Book(**book)
             t_list.append(loaded_book)
         return t_list
 
@@ -44,34 +35,28 @@ def enter_book(title='', author=''):
         return new_book
     else:
         print("\nPlease enter some information on the book you'd like to add.")
-        # Create temporary variables to pass to the Book() class.
-        title = input("Title: ")
-        if title == '':
-            print("You must input a title!")
+        # Create temporary dictionary to pass to the Book() class.
+        dict = {
+            'title': input("Title: "),
+            'author': input("Author: "),
+            'year': input("Publication year: "),
+            'isbn': input("ISBN: "),
+        }
+        if dict['title'] == '' or dict['author'] == '':
+            print("You must enter a title and author!")
             enter_book()
-        author = input("Author: ")
-        if author == '':
-            print("You must input an author!")
-            enter_book()
-        year = input("Publication year: ")
-        isbn = input("ISBN: ")
 
         # Check to make sure user entered the information correctly
         print("The information you entered is as follows:")
-        print(f"\tTitle: {title}\n"
-              f"\tAuthor: {author}")
-        if year:
-            print(f"\tPublication year: {year}")
-        if isbn:
-            print(f"\tISBN: {isbn}")
+        print(
+            f"\tTitle: {dict['title']}\n"
+            f"\tAuthor: {dict['author']}\n"
+            f"\tPublication year: {dict['year']}\n"
+            f"\tISBN: {dict['isbn']}\n"
+        )
         cont = input("Is this correct? (y/n): ")
         if cont.lower().strip() == 'y':
-            new_book = Book(
-                title.strip(),
-                author.strip().title(),
-                year=year.strip(),
-                isbn=isbn.strip(),
-            )
+            new_book = Book(**dict)
             print(columns * '-')
             return new_book
         elif cont.lower().strip() == 'n':
@@ -192,7 +177,7 @@ def edit(book_obj):
         edit(book_obj)
 
 
-def save_l(book_list, filename='C:\\Users\\Admin\\Documents\\GitHub\\reading-list\\reading_list.json'):
+def save_l(book_list, filename):
     """Save the list of books to a JSON file."""
     print("Saving your list...")
     with open(filename, 'w') as f:
@@ -227,9 +212,8 @@ def score_sort(book_list, reverse=False):
     score_list = []
     for num in range(1, 6):
         for book in book_list:
-            if book.info['score']:
-                if book.info['score'] == num:
-                    score_list.append(book)
+            if book.info['score'] == num:
+                score_list.append(book)
     if reverse:
         score_list.reverse()
         print("Here is your reading list sorted by score, from highest to lowest:")
