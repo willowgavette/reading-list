@@ -114,10 +114,10 @@ def print_l(book_list):
             if book.info['review']:
                 print("\t-Book review:\n"
                       f"{book.info['review']}")
-            if book.info['score'] == None:
-                print(f"\t-You have not scored this book yet.")
-            else:
+            if book.info['score']:
                 print(f"\t-Score: {book.info['score']}/5")
+            else:
+                print(f"\t-You have not scored this book yet.")
         else:
             print("\t-Completion status: Not completed")
         print(columns * '-')
@@ -205,55 +205,38 @@ def save_l(book_list, filename='C:\\Users\\Admin\\Documents\\GitHub\\reading-lis
 
 def sort_l(book_list, option):
     """Sort the list of books according to parameters given by the user."""
-    if option.strip() == '1':
-        title_list = []
-        for book in book_list:
-            temp_title = book.info['title']
-            title_list.append(temp_title)
-        title_list.sort()
-        print("Here is your reading list sorted by title:")
-        for item in title_list:
-            for book in book_list:
-                if book.info['title'] == item:
-                    print_b(book)
-    if option.strip() == '2':
-        author_list = []
-        for book in book_list:
-            temp_author = book.info['author']
-            author_list.append(temp_author)
-        author_list.sort()
-        print("Here is your reading list sorted by author:")
-        for item in author_list:
-            for book in book_list:
-                if book.info['author'] == item:
-                    print_b(book)
-    if option.strip() == '3':
-        year_list = []
-        for book in book_list:
-            temp_year = book.info['year']
-            year_list.append(temp_year)
-        year_list.sort(reverse=True)
-        print("Here is your reading list sorted by year, from newest to oldest:")
-        for item in year_list:
-            for book in book_list:
-                if book.info['year'] == item:
-                    print_b(book)
-    if option.strip() == '4':
-        year_list = []
-        for book in book_list:
-            temp_year = book.info['year']
-            year_list.append(temp_year)
-        year_list.sort()
-        print("Here is your reading list sorted by year, from oldest to newest:")
-        for item in year_list:
-            for book in book_list:
-                if book.info['year'] == item:
-                    print_b(book)
-    if option.strip() == '5':
+    if option == 4:
         score_sort(book_list, reverse=True)
-    if option.strip() == '6':
+    elif option == 5:
         score_sort(book_list)
-    return True
+    else:
+        temp_list = []
+        for book in book_list:
+            temp_var = book.info[option]
+            temp_list.append(temp_var)
+        temp_list.sort()
+        print(f"Here is your reading list sorted by {option}:")
+        for item in temp_list:
+            for book in book_list:
+                if book.info[option] == item:
+                    print_b(book)
+
+
+def score_sort(book_list, reverse=False):
+    """Minor function to sort book list by score. Reverse option flips the sort."""
+    score_list = []
+    for num in range(1, 6):
+        for book in book_list:
+            if book.info['score']:
+                if book.info['score'] == num:
+                    score_list.append(book)
+    if reverse:
+        score_list.reverse()
+        print("Here is your reading list sorted by score, from highest to lowest:")
+        print_l(score_list)
+    else:
+        print("Here is your reading list sorted by score, from lowest to highest:")
+        print_l(score_list)
 
 
 def get_summary(book_obj):
@@ -284,19 +267,3 @@ def delete(book_list, to_del):
     book_list.remove(book_list[to_del-1])
     print("Entry successfully deleted!")
     print(columns * '-')
-
-
-def score_sort(book_list, reverse=False):
-    """Minor function to sort book list by score. Reverse option flips the sort."""
-    score_list = []
-    for _ in range(1, 6):
-        for book in book_list:
-            if book.info['score'] == _:
-                score_list.append(book)
-    if reverse:
-        score_list.reverse()
-        print("Here is your reading list sorted by score, from highest to lowest:")
-        print_l(score_list)
-    else:
-        print("Here is your reading list sorted by score, from lowest to highest:")
-        print_l(score_list)

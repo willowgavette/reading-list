@@ -43,18 +43,24 @@ while True:
     elif task == '5':
         if len(book_list) == 0:
             print("\nThere are no entries to sort!")
-        elif len(book_list) > 1:
+        elif len(book_list) == 1:
+            print("\nYou can't sort a list with only one entry!")
+        else:
+            choices = ['title', 'author', 'year', 'score high to low', 'score low to high']
             print("You may sort your reading list by:\n"
                   "\t1. Title\n"
                   "\t2. Author\n"
                   "\t3. Year of publication(newest to oldest)\n"
-                  "\t4. Year of publication(oldest to newest)\n"
-                  "\t5. Score(highest to lowest)\n"
-                  "\t6. Score(lowest to highest)")
-            option = input("Please enter the number of the option you'd like: ")
-            sort_l(book_list, option)
-        else:
-            print("\nYou can't sort a list with only one entry!")
+                  "\t4. Score(highest to lowest)\n"
+                  "\t5. Score(lowest to highest)")
+            choice = int(input("Please enter the number of the option you'd like: "))
+            if choice <= 3:
+                choice = str(choices[choice-1])
+                sort_l(book_list, choice)
+            elif choice > 3 and choice < 6:
+                sort_l(book_list, choice)
+            else:
+                print("Invalid input detected! Please try again.")
     elif task == '6':
         if len(book_list) == 0:
             print("\nThere are no entries to delete!")
