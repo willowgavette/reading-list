@@ -106,7 +106,6 @@ def print_l(book_list):
         else:
             print("\t-Completion status: Not completed")
         print(columns * '-')
-    return True
 
 
 def print_b(book_obj):
@@ -128,7 +127,6 @@ def print_b(book_obj):
     else:
         print("\t-Completion status: Not finished")
     print(columns * '-')
-    return True
 
 
 def review(book_obj):
@@ -232,18 +230,15 @@ def get_summary(book_obj):
         if book_sum == f"{book_obj.info['title']} may refer to:":
             print(columns * '*')
             print("It looks like there are multiple Wikipedia articles under that name.\n"
-                  "You'll have to check wikipedia.org to see a summary. Sorry!")
+                  "You'll have to check the disambiguation page on wikipedia.org to see a summary. Sorry!")
             print(columns * '*')
-            return False
         else:
             print(columns * '-')
             print(f"Wikipedia summary for {book_obj.info['title']}:\n"
                   "\t" + book_sum)
             print(columns * '-')
-            return True
     else:
         print(f"We're sorry, but it looks like {book_obj.info['title']} does not have a Wikipedia entry.")
-        return False
 
 
 def delete(book_list, to_del):

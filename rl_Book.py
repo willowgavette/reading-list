@@ -17,7 +17,7 @@ class Book:
             self.info[key] = value
 
     def done(self):
-        """Record that we have done reading the book."""
+        """Record that we have done reading the book & open up review and score parameters."""
         self.info['done'] = True
         self.info['review'] = ''
         self.info['score'] = None
