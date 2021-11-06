@@ -68,7 +68,7 @@ def enter_book(title='', author=''):
 
 def options():  
     """Print the list of options the user can choose from."""
-    print("1. Check your reading list\n"
+    print("1. Check your full reading list\n"
           "2. Enter a new book\n"
           "3. Update a book entry\n"
           "4. Review and score a book\n"
@@ -246,3 +246,16 @@ def delete(book_list, to_del):
     book_list.remove(book_list[to_del-1])
     print("Entry successfully deleted!")
     print(columns * '-')
+
+
+def quick_print(book_list):
+    """Print out one-line string containing a book's title and author, used for book selection."""
+    book_num = 1
+    for book in book_list:
+        print(
+            f"Book #{book_num}:",
+            str(book),
+        )
+        book_num += 1
+    choice = int(input("Please enter the number of the book you want: "))
+    return choice

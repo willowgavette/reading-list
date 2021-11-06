@@ -26,8 +26,7 @@ while True:
         if len(book_list) == 0:
             print("\nThere are no entries to update!")
         elif len(book_list) > 1:
-            print_l(book_list)
-            edit_num = int(input("Please enter the number of the book you would like to edit: "))
+            edit_num = quick_print(book_list)
             edit(book_list[edit_num - 1])
         else:  # If there is only one book in the list, automatically update that book.
             edit(book_list[0])
@@ -35,8 +34,7 @@ while True:
         if len(book_list) == 0:
             print("\nThere are no entries to review & score!")
         elif len(book_list) > 1:
-            print_l(book_list)
-            review_num = int(input("Please enter the number of the book you would like to review: "))
+            review_num = quick_print(book_list)
             review(book_list[review_num-1])
         else:
             review(book_list[0])          
@@ -65,9 +63,7 @@ while True:
         if len(book_list) == 0:
             print("\nThere are no entries to delete!")
         else:
-            print_l(book_list)
-            to_del = input("Please enter the number of the entry you would like to delete: ")
-            to_del = int(to_del)
+            to_del = quick_print(book_list)
             delete(book_list, to_del)
     elif task == '7':
         if len(book_list) == 0:
@@ -75,9 +71,7 @@ while True:
         elif len(book_list) == 1:
             get_summary(book_list[0])
         else:
-            print_l(book_list)
-            to_sum = input("Please enter the number of the book you'd like to summarize: ")
-            to_sum = int(to_sum)
+            to_sum = quick_print(book_list)
             get_summary(book_list[to_sum-1])
     elif task == '8':
         # If the user has deleted all entries, erase JSON file where the books are stored.
