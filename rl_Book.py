@@ -33,19 +33,16 @@ class Book:
     def print(self):
         """Print a single book and all associated information."""
         print(f"\t-Title: {self.info['title']}\n"
-              f"\t-Author: {self.info['author']}"
-              f"\t-ISBN: {self.info['isbn']}")
-        if self.info['year']:
-            print(f"\t-Publication year: {self.info['year']}")
-        if self.info['isbn']:
-            print(f"\t-ISBN: {self.info['isbn']}")
+              f"\t-Author: {self.info['author']}\n"
+              f"\t-ISBN: {self.info['isbn']}\n"
+              f"\t-Publication year: {self.info['year']}")
         if self.info['done']:
             print("\t-Completion status: Completed")
             if self.info['review']:
                 print("\t-Book review:\n"
                       f"{self.info['review']}")
             else:
-                print("You have not reviewed this book yet.")
+                print("\t-You have not reviewed this book yet.")
             if self.info['score']:
                 print(f"\t-Score: {self.info['score']}/5")
             else:

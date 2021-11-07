@@ -51,7 +51,6 @@ def enter_book():
     cont = input("Is this correct? (y/n): ")
     if cont.lower().strip() == 'y':
         new_book = Book(**temp_dict)
-        print(columns * '-')
         return new_book
     elif cont.lower().strip() == 'n':
         enter_book()
@@ -81,7 +80,7 @@ def full_print(book_list):
     for book in book_list:
         print(f"\nBook #{book_number}:\n"
               f"\t-Title: {book.info['title']}\n"
-              f"\t-Author: {book.info['author']}"
+              f"\t-Author: {book.info['author']}\n"
               f"\t-ISBN: {book.info['isbn']}")
         if book.info['year']:
             print(f"\t-Publication year: {book.info['year']}")
@@ -104,6 +103,19 @@ def full_print(book_list):
         book_number += 1
 
 
+def quick_print(book_list):
+    """Print out one-line string containing a book's title and author, used for book selection."""
+    book_num = 1
+    for book in book_list:
+        print(
+            f"Book #{book_num}:",
+            str(book),
+        )
+        book_num += 1
+    choice = int(input("Please enter the number of the book you want: "))
+    return choice
+
+
 def save_l(book_list, filename):
     """Save the list of books to a JSON file."""
     print("Saving your list...")
@@ -111,8 +123,6 @@ def save_l(book_list, filename):
         for book in book_list:
             json.dump(book.info, f)
             f.write('\n')
-        print("List successfully saved!")
-        print(columns * '-')
 
 
 def sort_l(book_list, option):
@@ -132,6 +142,7 @@ def sort_l(book_list, option):
             for book in book_list:
                 if book.info[option] == item:
                     book.print()
+                    print(columns * '-')
 
 
 def score_sort(book_list, reverse=False):
@@ -154,17 +165,3 @@ def delete(book_list, to_del):
     """Delete an entry from the reading list."""
     book_list.remove(book_list[to_del-1])
     print("Entry successfully deleted!")
-    print(columns * '-')
-
-
-def quick_print(book_list):
-    """Print out one-line string containing a book's title and author, used for book selection."""
-    book_num = 1
-    for book in book_list:
-        print(
-            f"Book #{book_num}:",
-            str(book),
-        )
-        book_num += 1
-    choice = int(input("Please enter the number of the book you want: "))
-    return choice
