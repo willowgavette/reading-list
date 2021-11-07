@@ -18,7 +18,7 @@ while True:
         if len(book_list) == 0:
             print("\nThere are no entries to show!")
         else:
-            print_l(book_list)
+            full_print(book_list)
     elif task == '2':
         new_book = enter_book()
         book_list.append(new_book)
@@ -27,17 +27,25 @@ while True:
             print("\nThere are no entries to update!")
         elif len(book_list) > 1:
             edit_num = quick_print(book_list)
-            edit(book_list[edit_num - 1])
+            to_edit = book_list[edit_num-1]
+            to_edit.edit()
         else:  # If there is only one book in the list, automatically update that book.
-            edit(book_list[0])
+            to_edit = book_list[0]
+            to_edit.edit()
     elif task == '4':
         if len(book_list) == 0:
             print("\nThere are no entries to review & score!")
         elif len(book_list) > 1:
             review_num = quick_print(book_list)
-            review(book_list[review_num-1])
+            to_review = book_list[review_num-1]
+            if not to_review['done']:
+                print("You haven't finished this book yet!"
+                      "Please update the completion status before reviewing.")
+            else:
+                to_review.review()
         else:
-            review(book_list[0])          
+            to_review = book_list[0]
+            to_review.review()
     elif task == '5':
         if len(book_list) == 0:
             print("\nThere are no entries to sort!")
@@ -69,10 +77,12 @@ while True:
         if len(book_list) == 0:
             print("There are no entries to summarize!")
         elif len(book_list) == 1:
-            get_summary(book_list[0])
+            to_sum = book_list[0]
+            to_sum.summarize()
         else:
             to_sum = quick_print(book_list)
-            get_summary(book_list[to_sum-1])
+            book = book_list[to_sum-1]
+            book.summarize()
     elif task == '8':
         # If the user has deleted all entries, erase JSON file where the books are stored.
         if len(book_list) == 0:
