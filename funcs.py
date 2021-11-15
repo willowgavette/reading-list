@@ -1,4 +1,4 @@
-from rl_Book import Book
+from book import Book
 import json
 import shutil
 
@@ -10,10 +10,12 @@ def load_l(filename):
     """Load reading list into memory from JSON file."""
     with open(filename, 'r') as book_list:
         t_list = []
-        for json_obj in book_list:
-            book = json.loads(json_obj)
-            loaded_book = Book(**book)
-            t_list.append(loaded_book)
+        books = json.load(book_list)
+        for key, value in books.items():
+            loaded_book = {}
+            loaded_book[key] = value
+            new_book = Book(**loaded_book)
+            t_list.append(new_book)
         return t_list
 
 
@@ -121,8 +123,8 @@ def save_l(book_list, filename):
     print("Saving your list...")
     with open(filename, 'w') as f:
         for book in book_list:
-            json.dump(book.info, f)
-            f.write('\n')
+            json.dump(book.info, f, indent=4)
+            f.write(',\n')
 
 
 def sort_l(book_list, option):

@@ -1,4 +1,4 @@
-from rl_functions import *
+from funcs import *
 import os
 
 # Check storage to see if a list already exists.
@@ -41,20 +41,17 @@ while True:
         if len(book_list) == 0:
             print("\nThere are no entries to review & score!\n",
                   columns * '-')
-        elif len(book_list) > 1:
+        elif len(book_list) == 1:
+            to_review = book_list[0]
+            to_review.review()
+            print(columns * '-')
+        else:
             review_num = quick_print(book_list)
-            to_review = book_list[review_num-1]
+            to_review = book_list[review_num - 1]
             if not to_review.info['done']:
                 print("You haven't finished this book yet!\n"
                       "Please update the completion status before reviewing.\n",
                       columns * '-')
-            else:
-                to_review.review()
-                print(columns * '-')
-        else:
-            to_review = book_list[0]
-            to_review.review()
-            print(columns * '-')
     elif task == '5':
         if len(book_list) == 0:
             print("\nThere are no entries to sort!\n",

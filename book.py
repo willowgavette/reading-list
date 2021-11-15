@@ -20,8 +20,6 @@ class Book:
         for key, value in kwargs.items():
             self.info[key] = value
 
-        self = {'hello': 'goodbye'}
-
     def __str__(self):
         """Return string representation of a book object."""
         return f"{self.info['title']} by {self.info['author']}"

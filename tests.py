@@ -1,6 +1,6 @@
 import unittest
-from rl_functions import *
-from rl_Book import *
+from funcs import *
+from book import Book
 
 class FunctionsTestCase(unittest.TestCase):
     """A series of tests for the reading list app's functions & the Book class."""
