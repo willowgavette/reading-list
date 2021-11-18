@@ -28,6 +28,16 @@ def create_l():
     return t_list
 
 
+def save_l(book_list, filename):
+    """Save the list of books to a JSON file."""
+    json_list = []
+    for book in book_list:
+        temp = book.to_json()
+        json_list.append(temp)
+    with open(filename, 'w') as f:
+        json.dump(json_list, f, indent=4)
+
+
 def enter_book():
     """Create a new book object and store user-entered info. Return created object."""
     print("\nPlease enter some information on the book you'd like to add.")
@@ -116,15 +126,6 @@ def quick_print(book_list):
         book_num += 1
     choice = int(input("Please enter the number of the book you want: "))
     return choice
-
-
-def save_l(book_list, filename):
-    """Save the list of books to a JSON file."""
-    print("Saving your list...")
-    with open(filename, 'w') as f:
-        for book in book_list:
-            json.dump(book.info, f, indent=4)
-            f.write(',\n')
 
 
 def sort_l(book_list, option):

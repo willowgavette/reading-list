@@ -15,6 +15,8 @@ class Book:
             'author': author,
             'date': str(date.today()),
             'done': False,
+            'review': '',
+            'score': None,
         }
 
         for key, value in kwargs.items():
@@ -101,3 +103,17 @@ class Book:
                       "\t" + book_sum)
         else:
             print(f"We're sorry, but it looks like {self.info['title']} does not have a Wikipedia entry.")
+
+    def to_json(self):
+        """Convert all data to JSON format."""
+        json_dict = {
+            'title': self.info['title'],
+            'author': self.info['author'],
+            'year': self.info['year'],
+            'isbn': self.info['isbn'],
+            'date': self.info['date'],
+            'done': self.info['done'],
+            'review': self.info['review'],
+            'score': self.info['score'],
+        }
+        return json_dict

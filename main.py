@@ -7,7 +7,7 @@ filename = './reading_list.json'
 try:
     book_list = load_l(filename)
 except FileNotFoundError:
-    create_l()
+    book_list = create_l()
     
 print("\nWelcome to your reading list! You can:")
 
@@ -106,6 +106,7 @@ while True:
                   columns * '-')
             break
         else:
+            print("Saving your list...")
             save_l(book_list, filename)
             print("List successfully saved!\n",
                   "Thank you for using our reading list app!\n",
