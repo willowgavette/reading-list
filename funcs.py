@@ -11,10 +11,8 @@ def load_l(filename):
     with open(filename, 'r') as book_list:
         t_list = []
         books = json.load(book_list)
-        for key, value in books.items():
-            loaded_book = {}
-            loaded_book[key] = value
-            new_book = Book(**loaded_book)
+        for i in books:
+            new_book = Book(**i)
             t_list.append(new_book)
         return t_list
 
@@ -88,31 +86,12 @@ def options():
 
 def full_print(book_list):
     """Print the entire saved list of books."""
-    book_number = 1
+    num = 1
     for book in book_list:
-        print(f"\nBook #{book_number}:\n"
-              f"\t-Title: {book.info['title']}\n"
-              f"\t-Author: {book.info['author']}\n"
-              f"\t-ISBN: {book.info['isbn']}")
-        if book.info['year']:
-            print(f"\t-Publication year: {book.info['year']}")
-        if book.info['isbn']:
-            print(f"\t-ISBN: {book.info['isbn']}")
-        if book.info['done']:
-            print("\t-Completion status: Completed")
-            if book.info['review']:
-                print("\t-Book review:\n"
-                      f"{book.info['review']}")
-            else:
-                print("You have not reviewed this book yet.")
-            if book.info['score']:
-                print(f"\t-Score: {book.info['score']}/5")
-            else:
-                print(f"\t-You have not scored this book yet.")
-        else:
-            print("\t-Completion status: Not completed")
+        print(f"Book #{num}:")
+        book.print()
         print(columns * '-')
-        book_number += 1
+        num += 1
 
 
 def quick_print(book_list):

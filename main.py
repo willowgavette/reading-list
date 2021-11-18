@@ -52,6 +52,9 @@ while True:
                 print("You haven't finished this book yet!\n"
                       "Please update the completion status before reviewing.\n",
                       columns * '-')
+            else:
+                to_review.review()
+                print(columns * '-')
     elif task == '5':
         if len(book_list) == 0:
             print("\nThere are no entries to sort!\n",

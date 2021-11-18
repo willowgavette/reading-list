@@ -5,6 +5,26 @@
         "year": "1961",
         "isbn": "90137598324",
         "date": "2021-11-17",
+        "done": true,
+        "review": "Fantastic text that details the impacts of colonialism on colonized peoples.",
+        "score": 5
+    },
+    {
+        "title": "The State and Revolution",
+        "author": "Vladimir Ilyich Lenin",
+        "year": "1917",
+        "isbn": "192852435",
+        "date": "2021-11-17",
+        "done": false,
+        "review": "",
+        "score": null
+    },
+    {
+        "title": "Red Mars",
+        "author": "Kim Stanley Robinson",
+        "year": "1992",
+        "isbn": "093426345",
+        "date": "2021-11-17",
         "done": false,
         "review": "",
         "score": null
