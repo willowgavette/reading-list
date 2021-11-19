@@ -25,6 +25,16 @@
         "year": "1992",
         "isbn": "093426345",
         "date": "2021-11-17",
+        "done": true,
+        "review": "Really fascinating hard sci-fi!",
+        "score": 4
+    },
+    {
+        "title": "Dune",
+        "author": "Frank Herbert",
+        "year": "1960",
+        "isbn": "1938593745",
+        "date": "2021-11-18",
         "done": false,
         "review": "",
         "score": null

@@ -1,6 +1,7 @@
 from book import Book
 import json
 import shutil
+import os
 
 columns, lines = shutil.get_terminal_size()  # Getting size of terminal for pretty printing
 columns = int(columns)
@@ -34,6 +35,115 @@ def save_l(book_list, filename):
         json_list.append(temp)
     with open(filename, 'w') as f:
         json.dump(json_list, f, indent=4)
+
+
+def main(book_list, filename):
+    """Give user available actions, prompt for input, and process and direct that input."""
+    task = options()
+    if task == '1':
+        # If there are no entries to display, alert user.
+        if not book_list:
+            print("\nThere are no entries to show!\n",
+                  columns * '-')
+        elif len(book_list) == 1:
+            book_list[0].print()
+        else:
+            full_print(book_list)
+    elif task == '2':
+        new_book = enter_book()
+        book_list.append(new_book)
+        print(columns * '-')
+    elif task == '3':
+        if not book_list:
+            print("\nThere are no entries to update!\n",
+                  columns * '-')
+        elif len(book_list) == 1:  # If there is only one book in the list, automatically update that book.
+            book_list[0].edit()
+            print(columns * '-')
+        else:
+            edit_num = quick_print(book_list)
+            book_list[edit_num-1].edit()
+            print(columns * '-')
+    elif task == '4':
+        if not book_list:
+            print("\nThere are no entries to review & score!\n",
+                  columns * '-')
+        elif len(book_list) == 1:
+            book_list[0].review()
+            print(columns * '-')
+        else:
+            review_num = quick_print(book_list)
+            if not book_list[review_num-1]:
+                print("You haven't finished this book yet!\n"
+                      "Please update the completion status before reviewing.\n",
+                      columns * '-')
+            else:
+                book_list[review_num-1].review()
+                print(columns * '-')
+    elif task == '5':
+        if not book_list:
+            print("\nThere are no entries to sort!\n",
+                  columns * '-')
+        elif len(book_list) == 1:
+            print("\nYou can't sort a list with only one entry!\n",
+                  columns * '-')
+        else:
+            choices = ['title', 'author', 'year', 'score high to low', 'score low to high']
+            print("You may sort your reading list by:\n"
+                  "\t1. Title\n"
+                  "\t2. Author\n"
+                  "\t3. Year of publication(newest to oldest)\n"
+                  "\t4. Score(highest to lowest)\n"
+                  "\t5. Score(lowest to highest)")
+            choice = int(input("Please enter the number of the option you'd like: "))
+            if choice <= 3:
+                choice = str(choices[choice - 1])
+                sort_l(book_list, choice)
+            elif 3 < choice > 6:
+                sort_l(book_list, choice)
+            else:
+                print("Invalid input detected! Please try again.\n",
+                      columns * '-')
+    elif task == '6':
+        if not book_list:
+            print("\nThere are no entries to delete!\n",
+                  columns * '-')
+        elif len(book_list) == 1:
+            delete(book_list[0])
+        else:
+            to_del = quick_print(book_list)
+            delete(book_list, to_del)
+            print(columns * '-')
+    elif task == '7':
+        if not book_list:
+            print("There are no entries to summarize!\n",
+                  columns * '-')
+        elif len(book_list) == 1:
+            book_list[0].summarize()
+            print(columns * '-')
+        else:
+            to_sum = quick_print(book_list)
+            book_list[to_sum-1].summarize()
+            print(columns * '-')
+    elif task == '8':
+        # If the user has deleted all entries, erase JSON file where the books are stored.
+        if not book_list:
+            os.remove(filename)
+            print("All entries deleted.\n"
+                  "Thank you for using our reading list app!\n",
+                  columns * '-')
+            quit()
+        else:
+            print("Saving your list...")
+            save_l(book_list, filename)
+            print("List successfully saved!\n",
+                  "Thank you for using our reading list app!\n",
+                  columns * '-')
+            quit()
+    else:
+        print("Invalid input detected! Please try again.\n",
+              columns * '-')
+    main(book_list, filename)
 
 
 def enter_book():
@@ -143,7 +253,10 @@ def score_sort(book_list, reverse=False):
         full_print(score_list)
 
 
-def delete(book_list, to_del):
+def delete(book_list, to_del=''):
     """Delete an entry from the reading list."""
-    book_list.remove(book_list[to_del-1])
+    if to_del:
+        book_list.remove(book_list[to_del-1])
+    else:
+        book_list.pop()
     print("Entry successfully deleted!")

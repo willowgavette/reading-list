@@ -16,3 +16,7 @@ additional functionality:
 - link to audiobook
 - add essays and online articles
 - refactor functions to reduce total amount of code and be more efficient/make more sense with what they actually do
+
+remaining tasks:
+[DONE] refactor main loop into funcs.py
+- rewrite unit tests to work with newly refactored functions and methods
