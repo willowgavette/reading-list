@@ -88,7 +88,6 @@ def main(book_list, filename):
             print("\nYou can't sort a list with only one entry!\n",
                   columns * '-')
         else:
-            choices = ['title', 'author', 'year', 'score high to low', 'score low to high']
             print("You may sort your reading list by:\n"
                   "\t1. Title\n"
                   "\t2. Author\n"
@@ -96,11 +95,8 @@ def main(book_list, filename):
                   "\t4. Score(highest to lowest)\n"
                   "\t5. Score(lowest to highest)")
             choice = int(input("Please enter the number of the option you'd like: "))
-            if choice <= 3:
-                choice = str(choices[choice - 1])
-                sort_l(book_list, choice)
-            elif 3 < choice > 6:
-                sort_l(book_list, choice)
+            if 0 < choice < 6:
+                sort_l(book_list, choice-1)
             else:
                 print("Invalid input detected! Please try again.\n",
                       columns * '-')
@@ -219,20 +215,21 @@ def quick_print(book_list):
 
 def sort_l(book_list, option):
     """Sort the list of books according to parameters given by the user."""
-    if option == 4:
+    options = ['title', 'author', 'year']
+    if option == 3:
         score_sort(book_list, reverse=True)
-    elif option == 5:
+    elif option == 4:
         score_sort(book_list)
     else:
         temp_list = []
         for book in book_list:
-            temp_var = book.info[option]
+            temp_var = book.info[options[option]]
             temp_list.append(temp_var)
         temp_list.sort()
-        print(f"Here is your reading list sorted by {option}:")
+        print(f"Here is your reading list sorted by {options[option]}:")
         for item in temp_list:
             for book in book_list:
-                if book.info[option] == item:
+                if book.info[options[option]] == item:
                     book.print()
                     print(columns * '-')
 

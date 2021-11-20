@@ -79,7 +79,7 @@ class FunctionsTestCase(unittest.TestCase):
         
     def test_sort_l(self):
         """Does sorting the list according to a given parameter work?"""
-        self.assertTrue(sort_l(self.book_list, 1))
+        self.assertIsNone(sort_l(self.book_list, 1))
 
     def test_get_summary(self):
         """Does getting a summary from Wikipedia work?"""
