@@ -2,18 +2,26 @@ import unittest
 from funcs import *
 from book import Book
 
+
+test_filename = './DNE.json'
+
+
 class FunctionsTestCase(unittest.TestCase):
     """A series of tests for the reading list app's functions & the Book class."""
     
     def setUp(self):
         """Create a couple of test books for use in testing."""
-        self.setup_book = Book('test title', 'test author', score=1)
-        self.other_setup_book = Book('other test title', 'other test author')
+        self.book1 = Book('test title', 'test author')
+        self.book2 = Book('other test title', 'other test author')
+        self.book_list = [
+            self.book1,
+            self.book2,
+        ]
         
     def test_done_update(self):
         """Does updating a book's status work?"""
-        self.setup_book.done()
-        self.assertTrue(self.setup_book.info['done'])
+        self.book1.done()
+        self.assertTrue(self.book1.info['done'])
         
     def test_load_l(self):
         """
@@ -21,73 +29,68 @@ class FunctionsTestCase(unittest.TestCase):
         Does giving an incorrect filename result in a FileNotFoundError?
         """
         filename = './reading_list.json'
-        test_book_list = load_l(filename)
-        self.assertTrue(test_book_list)
-        test_filename = './DNE.json'
+
+        test_list = load_l(filename)
+        self.assertTrue(test_list)
         new_test_book_list = []
         try:
             new_test_book_list = load_l(test_filename)
         except FileNotFoundError:
-            self.assertFalse(new_test_book_list)
+            pass
+        self.assertFalse(new_test_book_list)
             
     def test_create_l(self):
         """Does creating a new list work?"""
-        test_filename = 'C:\\Users\\Admin\\Documents\\GitHub\\reading-list\\DNE.json'
-        test_l = create_l(test_filename) # data entered does not matter, we're simply testing whether or not a list is able to be created
+        test_l = create_l()
         self.assertTrue(test_l)
         
     def test_enter_book(self):
         """Does passing a title and author to enter_book work?"""
-        test_book = enter_book('test title', 'test author')
-        self.assertEqual(self.setup_book.info['title'], test_book.info['title'])
-        self.assertEqual(self.setup_book.info['author'], test_book.info['author'])
+        print("enter 'test title', 'test author'")
+        test_book = enter_book()
+        self.assertEqual(self.book1.info['title'], test_book.info['title'])
+        self.assertEqual(self.book1.info['author'], test_book.info['author'])
 
-    def test_print_l(self):
+    def test_full_print(self):
         """Does printing out the list of books work?"""
-        book_list = []
-        book_list.append(self.setup_book)
-        book_list.append(self.other_setup_book)
-        self.assertTrue(print_l(book_list))
+        self.assertIsNone(full_print(self.book_list))
         
     def test_print_b(self):
         """Does printing out a single book work?"""
-        self.assertTrue(print_b(self.setup_book))
+        self.assertIsNone(self.book1.print())
 
     def test_review(self):
         """Does entering a review and score for a book work?"""
         review_book = Book('test', 'test', done=True)
-        review(review_book) # enter 'Excellent!' for review, 1 for score
-        self.setup_book.done()
-        self.setup_book.info['review'] = 'Excellent!'
-        self.assertEqual(self.setup_book.info['review'], review_book.info['review'])
-        self.assertEqual(self.setup_book.info['score'], review_book.info['score'])
+        print("enter 'Excellent!' for review, 5 for score")
+        review_book.review()
+        self.book1.done()
+        self.book1.info['review'] = 'Excellent!'
+        self.book1.info['score'] = 5
+        self.assertEqual(self.book1.info['review'], review_book.info['review'])
+        self.assertEqual(self.book1.info['score'], review_book.info['score'])
         
     def test_edit(self):
         """Does editing a book in the list work?"""
         initial_book = Book('test title', 'test author')
-        edit(self.setup_book) # data entered does not matter since we're just testing whether or not you can update a piece of information
-        self.assertNotEqual(self.setup_book, initial_book)
+        self.book1.edit() # data entered does not matter since we're just testing
+                        # whether or not you can update a piece of information
+        self.assertNotEqual(self.book1, initial_book)
         
     def test_sort_l(self):
         """Does sorting the list according to a given parameter work?"""
-        book_list = []
-        book_list.append(self.setup_book)
-        book_list.append(self.other_setup_book)
-        self.assertTrue(sort_l(book_list, '1'))
+        self.assertTrue(sort_l(self.book_list, 1))
 
     def test_get_summary(self):
         """Does getting a summary from Wikipedia work?"""
         real_book = Book("Harry Potter and the Philosopher's Stone", "J. K. Rowling")
-        self.assertTrue(get_summary(real_book))
-        self.assertFalse(get_summary(self.setup_book))
+        self.assertIsNone(real_book.summarize())
+        self.assertFalse(self.book1.summarize())
     
     def test_delete(self):
         """Does deleting an entry from the reading list work?"""
-        book_list = []
-        book_list.append(self.setup_book)
-        book_list.append(self.other_setup_book)
-        delete(book_list, 1)
-        self.assertNotIn(self.setup_book, book_list)
+        delete(self.book_list, 1)
+        self.assertNotIn(self.book1, self.book_list)
         
 if __name__ == '__main__':
     unittest.main()

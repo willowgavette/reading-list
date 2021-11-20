@@ -13,6 +13,8 @@ class Book:
         self.info = {
             'title': title,
             'author': author,
+            'year': '',
+            'isbn': '',
             'date': str(date.today()),
             'done': False,
             'review': '',
